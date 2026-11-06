@@ -76,6 +76,7 @@ import { Route as BoekingIndexRouteImport } from './routes/boeking.index'
 import { Route as BoekingBevestigingRouteImport } from './routes/boeking.bevestiging'
 import { Route as CertificaatIdRouteImport } from './routes/certificaat.$id'
 import { Route as InformatieOnderwerpRouteImport } from './routes/informatie.$onderwerp'
+import { Route as InschrijvingAnnulerenRouteImport } from './routes/inschrijving.annuleren'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 import { Route as QrAnimalIdRouteImport } from './routes/qr.$animalId'
 import { Route as VeldIndexRouteImport } from './routes/veld.index'
@@ -118,6 +119,7 @@ import { Route as ApiDevRunMigrationsRouteImport } from './routes/api/dev/run-mi
 import { Route as ApiDonationCreateSessionRouteImport } from './routes/api/donation/create-session'
 import { Route as ApiEmailSendTransactionalRouteImport } from './routes/api/email/send-transactional'
 import { Route as ApiEmailTestTemplatesRouteImport } from './routes/api/email/test-templates'
+import { Route as ApiEventsCheckoutRouteImport } from './routes/api/events/checkout'
 import { Route as ApiGoogleStatusRouteImport } from './routes/api/google/status'
 import { Route as ApiGoogleSyncRouteImport } from './routes/api/google/sync'
 import { Route as ApiInfomaniakStatusRouteImport } from './routes/api/infomaniak/status'
@@ -503,6 +505,11 @@ const InformatieOnderwerpRoute = InformatieOnderwerpRouteImport.update({
   path: '/informatie/$onderwerp',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InschrijvingAnnulerenRoute = InschrijvingAnnulerenRouteImport.update({
+  id: '/inschrijving/annuleren',
+  path: '/inschrijving/annuleren',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductSlugRoute = ProductSlugRouteImport.update({
   id: '/product/$slug',
   path: '/product/$slug',
@@ -717,6 +724,11 @@ const ApiEmailSendTransactionalRoute =
 const ApiEmailTestTemplatesRoute = ApiEmailTestTemplatesRouteImport.update({
   id: '/api/email/test-templates',
   path: '/api/email/test-templates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiEventsCheckoutRoute = ApiEventsCheckoutRouteImport.update({
+  id: '/api/events/checkout',
+  path: '/api/events/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiGoogleStatusRoute = ApiGoogleStatusRouteImport.update({
@@ -1032,6 +1044,7 @@ export interface FileRoutesByFullPath {
   '/boeking/bevestiging': typeof BoekingBevestigingRoute
   '/certificaat/$id': typeof CertificaatIdRoute
   '/informatie/$onderwerp': typeof InformatieOnderwerpRoute
+  '/inschrijving/annuleren': typeof InschrijvingAnnulerenRoute
   '/product/$slug': typeof ProductSlugRoute
   '/qr/$animalId': typeof QrAnimalIdRoute
   '/veld/aanvragen': typeof VeldAanvragenRoute
@@ -1078,6 +1091,7 @@ export interface FileRoutesByFullPath {
   '/api/donation/create-session': typeof ApiDonationCreateSessionRoute
   '/api/email/send-transactional': typeof ApiEmailSendTransactionalRoute
   '/api/email/test-templates': typeof ApiEmailTestTemplatesRoute
+  '/api/events/checkout': typeof ApiEventsCheckoutRoute
   '/api/google/status': typeof ApiGoogleStatusRoute
   '/api/google/sync': typeof ApiGoogleSyncRoute
   '/api/infomaniak/status': typeof ApiInfomaniakStatusRoute
@@ -1187,6 +1201,7 @@ export interface FileRoutesByTo {
   '/boeking/bevestiging': typeof BoekingBevestigingRoute
   '/certificaat/$id': typeof CertificaatIdRoute
   '/informatie/$onderwerp': typeof InformatieOnderwerpRoute
+  '/inschrijving/annuleren': typeof InschrijvingAnnulerenRoute
   '/product/$slug': typeof ProductSlugRoute
   '/qr/$animalId': typeof QrAnimalIdRoute
   '/veld/aanvragen': typeof VeldAanvragenRoute
@@ -1233,6 +1248,7 @@ export interface FileRoutesByTo {
   '/api/donation/create-session': typeof ApiDonationCreateSessionRoute
   '/api/email/send-transactional': typeof ApiEmailSendTransactionalRoute
   '/api/email/test-templates': typeof ApiEmailTestTemplatesRoute
+  '/api/events/checkout': typeof ApiEventsCheckoutRoute
   '/api/google/status': typeof ApiGoogleStatusRoute
   '/api/google/sync': typeof ApiGoogleSyncRoute
   '/api/infomaniak/status': typeof ApiInfomaniakStatusRoute
@@ -1347,6 +1363,7 @@ export interface FileRoutesById {
   '/boeking/bevestiging': typeof BoekingBevestigingRoute
   '/certificaat/$id': typeof CertificaatIdRoute
   '/informatie/$onderwerp': typeof InformatieOnderwerpRoute
+  '/inschrijving/annuleren': typeof InschrijvingAnnulerenRoute
   '/product/$slug': typeof ProductSlugRoute
   '/qr/$animalId': typeof QrAnimalIdRoute
   '/veld/aanvragen': typeof VeldAanvragenRoute
@@ -1393,6 +1410,7 @@ export interface FileRoutesById {
   '/api/donation/create-session': typeof ApiDonationCreateSessionRoute
   '/api/email/send-transactional': typeof ApiEmailSendTransactionalRoute
   '/api/email/test-templates': typeof ApiEmailTestTemplatesRoute
+  '/api/events/checkout': typeof ApiEventsCheckoutRoute
   '/api/google/status': typeof ApiGoogleStatusRoute
   '/api/google/sync': typeof ApiGoogleSyncRoute
   '/api/infomaniak/status': typeof ApiInfomaniakStatusRoute
@@ -1507,6 +1525,7 @@ export interface FileRouteTypes {
     | '/boeking/bevestiging'
     | '/certificaat/$id'
     | '/informatie/$onderwerp'
+    | '/inschrijving/annuleren'
     | '/product/$slug'
     | '/qr/$animalId'
     | '/veld/aanvragen'
@@ -1553,6 +1572,7 @@ export interface FileRouteTypes {
     | '/api/donation/create-session'
     | '/api/email/send-transactional'
     | '/api/email/test-templates'
+    | '/api/events/checkout'
     | '/api/google/status'
     | '/api/google/sync'
     | '/api/infomaniak/status'
@@ -1662,6 +1682,7 @@ export interface FileRouteTypes {
     | '/boeking/bevestiging'
     | '/certificaat/$id'
     | '/informatie/$onderwerp'
+    | '/inschrijving/annuleren'
     | '/product/$slug'
     | '/qr/$animalId'
     | '/veld/aanvragen'
@@ -1708,6 +1729,7 @@ export interface FileRouteTypes {
     | '/api/donation/create-session'
     | '/api/email/send-transactional'
     | '/api/email/test-templates'
+    | '/api/events/checkout'
     | '/api/google/status'
     | '/api/google/sync'
     | '/api/infomaniak/status'
@@ -1821,6 +1843,7 @@ export interface FileRouteTypes {
     | '/boeking/bevestiging'
     | '/certificaat/$id'
     | '/informatie/$onderwerp'
+    | '/inschrijving/annuleren'
     | '/product/$slug'
     | '/qr/$animalId'
     | '/veld/aanvragen'
@@ -1867,6 +1890,7 @@ export interface FileRouteTypes {
     | '/api/donation/create-session'
     | '/api/email/send-transactional'
     | '/api/email/test-templates'
+    | '/api/events/checkout'
     | '/api/google/status'
     | '/api/google/sync'
     | '/api/infomaniak/status'
@@ -1973,6 +1997,7 @@ export interface RootRouteChildren {
   BoekingBevestigingRoute: typeof BoekingBevestigingRoute
   CertificaatIdRoute: typeof CertificaatIdRoute
   InformatieOnderwerpRoute: typeof InformatieOnderwerpRoute
+  InschrijvingAnnulerenRoute: typeof InschrijvingAnnulerenRoute
   ProductSlugRoute: typeof ProductSlugRoute
   QrAnimalIdRoute: typeof QrAnimalIdRoute
   VerifieerCodeRoute: typeof VerifieerCodeRoute
@@ -2005,6 +2030,7 @@ export interface RootRouteChildren {
   ApiDonationCreateSessionRoute: typeof ApiDonationCreateSessionRoute
   ApiEmailSendTransactionalRoute: typeof ApiEmailSendTransactionalRoute
   ApiEmailTestTemplatesRoute: typeof ApiEmailTestTemplatesRoute
+  ApiEventsCheckoutRoute: typeof ApiEventsCheckoutRoute
   ApiGoogleStatusRoute: typeof ApiGoogleStatusRoute
   ApiGoogleSyncRoute: typeof ApiGoogleSyncRoute
   ApiInfomaniakStatusRoute: typeof ApiInfomaniakStatusRoute
@@ -2521,6 +2547,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InformatieOnderwerpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/inschrijving/annuleren': {
+      id: '/inschrijving/annuleren'
+      path: '/inschrijving/annuleren'
+      fullPath: '/inschrijving/annuleren'
+      preLoaderRoute: typeof InschrijvingAnnulerenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/product/$slug': {
       id: '/product/$slug'
       path: '/product/$slug'
@@ -2813,6 +2846,13 @@ declare module '@tanstack/react-router' {
       path: '/api/email/test-templates'
       fullPath: '/api/email/test-templates'
       preLoaderRoute: typeof ApiEmailTestTemplatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/events/checkout': {
+      id: '/api/events/checkout'
+      path: '/api/events/checkout'
+      fullPath: '/api/events/checkout'
+      preLoaderRoute: typeof ApiEventsCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/google/status': {
@@ -3346,6 +3386,7 @@ const rootRouteChildren: RootRouteChildren = {
   BoekingBevestigingRoute: BoekingBevestigingRoute,
   CertificaatIdRoute: CertificaatIdRoute,
   InformatieOnderwerpRoute: InformatieOnderwerpRoute,
+  InschrijvingAnnulerenRoute: InschrijvingAnnulerenRoute,
   ProductSlugRoute: ProductSlugRoute,
   QrAnimalIdRoute: QrAnimalIdRoute,
   VerifieerCodeRoute: VerifieerCodeRoute,
@@ -3378,6 +3419,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiDonationCreateSessionRoute: ApiDonationCreateSessionRoute,
   ApiEmailSendTransactionalRoute: ApiEmailSendTransactionalRoute,
   ApiEmailTestTemplatesRoute: ApiEmailTestTemplatesRoute,
+  ApiEventsCheckoutRoute: ApiEventsCheckoutRoute,
   ApiGoogleStatusRoute: ApiGoogleStatusRoute,
   ApiGoogleSyncRoute: ApiGoogleSyncRoute,
   ApiInfomaniakStatusRoute: ApiInfomaniakStatusRoute,
