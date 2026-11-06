@@ -32,6 +32,7 @@ export const registrationSchema = z.object({
   lang,
   allowWaitlist: z.boolean().default(true),
   website_hp: z.string().max(200).optional(),
+  returnPath: z.string().max(200).optional(),
 });
 
 /** Gratis evenement: meteen bevestigd of op de wachtlijst. */

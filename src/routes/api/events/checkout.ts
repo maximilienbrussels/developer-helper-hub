@@ -33,6 +33,10 @@ export const Route = createFileRoute("/api/events/checkout")({
         } catch {
           /* standaarddomein */
         }
+        const back =
+          data.returnPath && /^\/[a-z0-9/_-]*$/i.test(data.returnPath) && !data.returnPath.startsWith("//")
+            ? data.returnPath
+            : "/";
         const title = res.event[`title_${data.lang}` as const] || res.event.title_nl;
         const session = await stripeServer().checkout.sessions.create({
           mode: "payment",
@@ -50,8 +54,8 @@ export const Route = createFileRoute("/api/events/checkout")({
             },
           ],
           metadata: { kind: "event", registration_id: res.id, lang: data.lang },
-          success_url: `${origin}/events?inschrijving=betaald`,
-          cancel_url: `${origin}/events?inschrijving=geannuleerd`,
+          success_url: `${origin}${back}?inschrijving=betaald`,
+          cancel_url: `${origin}${back}?inschrijving=geannuleerd`,
         });
         return Response.json({ url: session.url });
       },

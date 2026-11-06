@@ -17,6 +17,7 @@ import {
 } from "@/lib/routes-i18n";
 import { VisitPage } from "@/pages/visit";
 import { AnimalsPage, animalsQO } from "@/pages/animals";
+import { publicEventsQO } from "@/components/events/PublicEventList";
 import { AnimalPassportPage as AnimalDetailPage } from "@/pages/animal-passport";
 import { EducationPage, EducationBookingPage } from "@/pages/education";
 import { NewsPage, NewsDetailPage } from "@/pages/news";
@@ -124,6 +125,7 @@ export const Route = createFileRoute("/$lang/$")({
     }
 
     if (key === "animals") await safe(context.queryClient.ensureQueryData(animalsQO));
+    if (key === "events") await safe(context.queryClient.ensureQueryData(publicEventsQO));
 
     if (key === "shop" || key === "product") await safe(context.queryClient.ensureQueryData(productsQO));
     if (key === "product" && !sub) throw notFound();

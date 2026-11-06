@@ -9,6 +9,7 @@ import { NEWS, SLUGS } from "@/lib/routes-i18n";
 import { FARM_CAMPS, CAMP_SCHEDULE } from "@/lib/farm-camps";
 import { CalendarDays, Clock, Ticket } from "lucide-react";
 import { Illustration } from "@/components/Illustration";
+import { PublicEventList } from "@/components/events/PublicEventList";
 import dagOpDeBoerderijAsset from "@/assets/illustrations/dag-op-de-boerderij.webp.asset.json";
 
 type AgendaKind = "camp" | "event";
@@ -152,6 +153,8 @@ export function EventsPage() {
           {c.title}
         </h1>
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">{c.lede}</p>
+
+        <PublicEventList />
 
         <section className="mt-12">
           <h2 className="flex items-center gap-2 font-serif text-2xl text-[color:var(--ink-forest)]">
