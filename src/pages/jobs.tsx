@@ -1,4 +1,5 @@
 import { PagePhotoBand } from "@/components/PagePhotoBand";
+import { InternshipPicker } from "@/components/InternshipPicker";
 import { NavHeader } from "@/components/NavHeader";
 import { PageContactForm } from "@/components/PageContactForm";
 import { useT } from "@/lib/i18n";
@@ -75,16 +76,7 @@ export function JobsPage() {
             <GraduationCap className="h-5 w-5" aria-hidden /> {c.internshipsTitle}
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-muted-foreground">{c.internshipsIntro}</p>
-          <ul className="mt-4 grid gap-2 sm:grid-cols-2">
-            {c.internshipFields.map((f) => (
-              <li
-                key={f}
-                className="rounded-2xl border border-border/50 px-4 py-3 text-sm text-foreground/90"
-              >
-                {f}
-              </li>
-            ))}
-          </ul>
+          <InternshipPicker />
           <p className="mt-4 text-sm text-muted-foreground">{c.internshipNote}</p>
         </section>
 
