@@ -486,8 +486,11 @@ export function AIChatDrawer(props: Props = {}) {
   const siteContact = useSiteContact();
   const { data: farmAssets } = useQuery({
     queryKey: ["farm-assets"],
-    queryFn: () => fetchFarmAssets(),
+    // Een mislukte oproep (bv. na een serverherstart) valt terug op de vaste lijst.
+    queryFn: () => fetchFarmAssets().catch(() => FARM_ASSETS),
     staleTime: 10 * 60 * 1000,
+    retry: false,
+    throwOnError: false,
   });
   const c = COPY[lang];
   const control = useMaximChatControl();
