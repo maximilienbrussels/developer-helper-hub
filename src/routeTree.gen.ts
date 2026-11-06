@@ -112,6 +112,7 @@ import { Route as ApiAuthMagicLinkRouteImport } from './routes/api/auth/magic-li
 import { Route as ApiAuthMastodonRouteImport } from './routes/api/auth/mastodon'
 import { Route as ApiAuthProvidersRouteImport } from './routes/api/auth/providers'
 import { Route as ApiAuthRoutRouteImport } from './routes/api/auth/rout'
+import { Route as ApiBirthdayWaitlistRouteImport } from './routes/api/birthday/waitlist'
 import { Route as ApiChatEmailRouteImport } from './routes/api/chat/email'
 import { Route as ApiCheckoutCreateSessionRouteImport } from './routes/api/checkout/create-session'
 import { Route as ApiDevHealthRouteImport } from './routes/api/dev/health'
@@ -688,6 +689,11 @@ const ApiAuthRoutRoute = ApiAuthRoutRouteImport.update({
   path: '/api/auth/rout',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiBirthdayWaitlistRoute = ApiBirthdayWaitlistRouteImport.update({
+  id: '/api/birthday/waitlist',
+  path: '/api/birthday/waitlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiChatEmailRoute = ApiChatEmailRouteImport.update({
   id: '/email',
   path: '/email',
@@ -1084,6 +1090,7 @@ export interface FileRoutesByFullPath {
   '/api/auth/mastodon': typeof ApiAuthMastodonRoute
   '/api/auth/providers': typeof ApiAuthProvidersRoute
   '/api/auth/rout': typeof ApiAuthRoutRouteWithChildren
+  '/api/birthday/waitlist': typeof ApiBirthdayWaitlistRoute
   '/api/chat/email': typeof ApiChatEmailRoute
   '/api/checkout/create-session': typeof ApiCheckoutCreateSessionRoute
   '/api/dev/health': typeof ApiDevHealthRoute
@@ -1241,6 +1248,7 @@ export interface FileRoutesByTo {
   '/api/auth/mastodon': typeof ApiAuthMastodonRoute
   '/api/auth/providers': typeof ApiAuthProvidersRoute
   '/api/auth/rout': typeof ApiAuthRoutRouteWithChildren
+  '/api/birthday/waitlist': typeof ApiBirthdayWaitlistRoute
   '/api/chat/email': typeof ApiChatEmailRoute
   '/api/checkout/create-session': typeof ApiCheckoutCreateSessionRoute
   '/api/dev/health': typeof ApiDevHealthRoute
@@ -1403,6 +1411,7 @@ export interface FileRoutesById {
   '/api/auth/mastodon': typeof ApiAuthMastodonRoute
   '/api/auth/providers': typeof ApiAuthProvidersRoute
   '/api/auth/rout': typeof ApiAuthRoutRouteWithChildren
+  '/api/birthday/waitlist': typeof ApiBirthdayWaitlistRoute
   '/api/chat/email': typeof ApiChatEmailRoute
   '/api/checkout/create-session': typeof ApiCheckoutCreateSessionRoute
   '/api/dev/health': typeof ApiDevHealthRoute
@@ -1565,6 +1574,7 @@ export interface FileRouteTypes {
     | '/api/auth/mastodon'
     | '/api/auth/providers'
     | '/api/auth/rout'
+    | '/api/birthday/waitlist'
     | '/api/chat/email'
     | '/api/checkout/create-session'
     | '/api/dev/health'
@@ -1722,6 +1732,7 @@ export interface FileRouteTypes {
     | '/api/auth/mastodon'
     | '/api/auth/providers'
     | '/api/auth/rout'
+    | '/api/birthday/waitlist'
     | '/api/chat/email'
     | '/api/checkout/create-session'
     | '/api/dev/health'
@@ -1883,6 +1894,7 @@ export interface FileRouteTypes {
     | '/api/auth/mastodon'
     | '/api/auth/providers'
     | '/api/auth/rout'
+    | '/api/birthday/waitlist'
     | '/api/chat/email'
     | '/api/checkout/create-session'
     | '/api/dev/health'
@@ -2024,6 +2036,7 @@ export interface RootRouteChildren {
   ApiAuthMastodonRoute: typeof ApiAuthMastodonRoute
   ApiAuthProvidersRoute: typeof ApiAuthProvidersRoute
   ApiAuthRoutRoute: typeof ApiAuthRoutRouteWithChildren
+  ApiBirthdayWaitlistRoute: typeof ApiBirthdayWaitlistRoute
   ApiCheckoutCreateSessionRoute: typeof ApiCheckoutCreateSessionRoute
   ApiDevHealthRoute: typeof ApiDevHealthRoute
   ApiDevRunMigrationsRoute: typeof ApiDevRunMigrationsRoute
@@ -2799,6 +2812,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthRoutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/birthday/waitlist': {
+      id: '/api/birthday/waitlist'
+      path: '/api/birthday/waitlist'
+      fullPath: '/api/birthday/waitlist'
+      preLoaderRoute: typeof ApiBirthdayWaitlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/chat/email': {
       id: '/api/chat/email'
       path: '/email'
@@ -3413,6 +3433,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAuthMastodonRoute: ApiAuthMastodonRoute,
   ApiAuthProvidersRoute: ApiAuthProvidersRoute,
   ApiAuthRoutRoute: ApiAuthRoutRouteWithChildren,
+  ApiBirthdayWaitlistRoute: ApiBirthdayWaitlistRoute,
   ApiCheckoutCreateSessionRoute: ApiCheckoutCreateSessionRoute,
   ApiDevHealthRoute: ApiDevHealthRoute,
   ApiDevRunMigrationsRoute: ApiDevRunMigrationsRoute,
