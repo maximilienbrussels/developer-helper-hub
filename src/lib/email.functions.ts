@@ -26,10 +26,11 @@ export const sendDonationConfirmation = createServerFn({ method: "POST" })
     await (await import("./email-guard.server")).guardRate("donation", data.email);
     const { sendMail, donationEmail } = await import("./email.server");
     const { structuredCommunication } = await import("./payment-reference");
-    const { getOrganisation } = await import("./organisation.server");
-
-    const org = await getOrganisation();
-    const referentie = structuredCommunication(9, Math.floor(Math.random() * 9000) + 1000);
+    // Giften per overschrijving lopen via Service Arc-en-Ciel (project n°156):
+    // alleen met deze rekening en mededeling krijgt de gever een fiscaal attest.
+    const { ARC_EN_CIEL } = await import("./donation");
+    const org = { naam: ARC_EN_CIEL.beneficiary, iban: ARC_EN_CIEL.iban, bic: ARC_EN_CIEL.bic };
+    const referentie = ARC_EN_CIEL.communication;
 
     const { subject, html } = donationEmail({
       naam: data.naam,
