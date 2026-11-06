@@ -227,7 +227,7 @@ function SponsorForm({
   const x = deepTx(tx, EXTRA[L]);
   const [category, setCategory] = useState<SponsorCategoryId | null>(null);
   const [animal, setAnimal] = useState<Animal | null>(null);
-  const [interval, setInterval] = useState<"year" | "month">("year");
+  const [interval, setPayInterval] = useState<"year" | "month">("year");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
@@ -368,7 +368,7 @@ function SponsorForm({
                     type="button"
                     key={iv}
                     aria-pressed={interval === iv}
-                    onClick={() => setInterval(iv)}
+                    onClick={() => setPayInterval(iv)}
                     className={`rounded-full border px-5 py-2.5 text-sm font-semibold ${
                       interval === iv ? "border-primary bg-primary text-primary-foreground" : "border-border text-foreground"
                     }`}
