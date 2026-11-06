@@ -28,7 +28,8 @@ import { useT } from "@/lib/i18n";
 import type { Lang } from "@/lib/i18n";
 import { sendContactMessage } from "@/lib/email.functions";
 import { useHoneypot } from "@/components/HoneypotField";
-import invitationAsset from "@/assets/uitnodiging-boerderijfeest.pdf.asset.json";
+import { InvitationEditor } from "@/components/InvitationEditor";
+import { OLD_ASSETS } from "@/lib/old-site-assets";
 import {
   BIRTHDAY_DEPOSIT,
   BIRTHDAY_HOUSE_RULES,
@@ -281,7 +282,7 @@ export function BirthdayPackages() {
         })}
       </div>
 
-      <InvitationCard />
+      <InvitationEditor />
 
       <div className="mt-6 rounded-3xl bg-[color:var(--surface-page)]/70 p-6 md:p-8">
         <h3 className="text-[11px] uppercase tracking-[0.25em] text-[color:var(--color-terracotta)] font-medium">
@@ -326,29 +327,6 @@ function RuleIcon({ id }: { id: string }) {
   if (id === "access") return <Users className={cls} aria-hidden />;
   if (id === "cancel") return <CalendarDays className={cls} aria-hidden />;
   return <Clock className={cls} aria-hidden />;
-}
-
-function InvitationCard() {
-  const { lang } = useT();
-  const c = COPY[lang];
-  return (
-    <div className="mt-6 flex flex-wrap items-center justify-between gap-5 rounded-3xl border border-[color:var(--color-terracotta)]/40 bg-card p-6 md:p-8">
-      <div className="max-w-xl">
-        <h3 className="font-serif text-xl text-[color:var(--ink-forest)] md:text-2xl">
-          {c.invitationTitle}
-        </h3>
-        <p className="mt-2 text-sm leading-relaxed text-foreground/90">{c.invitationBody}</p>
-      </div>
-      <a
-        href={invitationAsset.url}
-        download="uitnodiging-boerderijfeest.pdf"
-        className="inline-flex items-center gap-2 rounded-full bg-[color:var(--ink-forest)] px-5 py-3 text-[12px] font-semibold uppercase tracking-widest text-[color:var(--surface-page)] transition-opacity hover:opacity-90"
-      >
-        <Download className="h-4 w-4" aria-hidden />
-        {c.invitationCta}
-      </a>
-    </div>
-  );
 }
 
 function BirthdayDialog({ pkg, onClose }: { pkg: BirthdayPackage | null; onClose: () => void }) {
@@ -455,8 +433,8 @@ function BirthdayDialog({ pkg, onClose }: { pkg: BirthdayPackage | null; onClose
                 <p className="mt-4 font-serif text-xl text-[color:var(--ink-forest)]">{c.sent}</p>
                 <p className="mt-2 text-sm text-foreground/90">{c.sentBody}</p>
                 <a
-                  href={invitationAsset.url}
-                  download="uitnodiging-boerderijfeest.pdf"
+                  href="#uitnodiging"
+                  onClick={onClose}
                   className="mt-5 inline-flex items-center gap-2 rounded-full bg-[color:var(--ink-forest)] px-5 py-3 text-[12px] font-semibold uppercase tracking-widest text-[color:var(--surface-page)] transition-opacity hover:opacity-90"
                 >
                   <Download className="h-4 w-4" aria-hidden />
