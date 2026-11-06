@@ -1,13 +1,10 @@
 import { PagePhotoBand } from "@/components/PagePhotoBand";
 import { NavHeader } from "@/components/NavHeader";
 import { MastodonShareButton } from "@/components/social/MastodonShareButton";
-import { formatT, useT } from "@/lib/i18n";
+import { useT } from "@/lib/i18n";
 import { deepTx } from "@/lib/i18n-extra";
 import type { Lang } from "@/lib/i18n";
-import { Copy, Smartphone, Loader2 } from "lucide-react";
-import { useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
-import { sendDonationConfirmation } from "@/lib/email.functions";
+import { GiftPanels } from "@/components/support/GiftPanels";
 import { LocalLink } from "@/components/LocalLink";
 import { subPathFor } from "@/lib/routes-i18n";
 
@@ -75,22 +72,10 @@ const COPY: Record<
   },
 };
 
-const IBAN = "BE00 0000 0000 0000";
-const BIC = "GEBABEBB";
-const NAME = "ASBL Maximilien";
-const WERO_EMAIL = "dons@maximilien.brussels";
 
 export function SupportPage() {
   const { t, lang, tx } = useT();
   const c0 = deepTx(tx, COPY[lang]);
-  const [copied, setCopied] = useState<string | null>(null);
-  const copy = (val: string, key: string) => {
-    navigator.clipboard.writeText(val).then(() => {
-      setCopied(key);
-      setTimeout(() => setCopied(null), 1500);
-    });
-  };
-
   const GOALS = [
     { title: t("support.goal.food"), body: t("support.goal.food.body"), amount: "€25" },
     { title: t("support.goal.workshop"), body: t("support.goal.workshop.body"), amount: "€80" },
@@ -119,74 +104,7 @@ export function SupportPage() {
           </div>
         </header>
 
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
-          {/* Wero */}
-          <div className="min-w-0 rounded-3xl border border-[color:var(--color-sage)]/40 bg-card p-6 shadow-sm transition-shadow hover:shadow-md sm:p-8">
-            <div className="flex items-center gap-3">
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-[color:var(--color-sage)]/25 text-[color:var(--ink-forest)]">
-                <Smartphone className="h-5 w-5" />
-              </span>
-              <h2 className="font-serif text-2xl italic text-[color:var(--ink-forest)] md:text-3xl">
-                {t("support.wero.title")}
-              </h2>
-            </div>
-            <p className="mt-4 text-sm leading-relaxed text-foreground/90">
-              {t("support.wero.body")}
-            </p>
-            <div className="mt-6 rounded-2xl border border-border/70 bg-[color:var(--surface-page)] p-6">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
-                {t("support.wero.emailLabel")}
-              </p>
-              <div className="mt-2 flex items-center justify-between gap-3">
-                <code className="min-w-0 break-all text-sm">{WERO_EMAIL}</code>
-                <button
-                  type="button"
-                  onClick={() => copy(WERO_EMAIL, "wero")}
-                  className="inline-flex shrink-0 min-h-[48px] sm:min-h-[36px] items-center gap-1 rounded-full border border-border px-3 text-xs hover:border-[color:var(--color-terracotta)]"
-                >
-                  <Copy className="h-3.5 w-3.5" />
-                  {copied === "wero" ? "✓" : t("common.copy")}
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Bank transfer */}
-          <div className="min-w-0 rounded-3xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-md sm:p-8">
-            <h2 className="font-serif text-2xl italic text-[color:var(--ink-forest)] md:text-3xl">
-              {t("support.transfer.title")}
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-foreground/90">
-              {t("support.transfer.body")}
-            </p>
-
-            <dl className="mt-6 space-y-3 text-sm">
-              <BankLine
-                label={t("support.beneficiary")}
-                value={NAME}
-                onCopy={() => copy(NAME, "name")}
-                copied={copied === "name"}
-                copyLabel={t("common.copy")}
-              />
-              <BankLine
-                label={t("support.iban")}
-                value={IBAN}
-                onCopy={() => copy(IBAN.replace(/\s/g, ""), "iban")}
-                copied={copied === "iban"}
-                copyLabel={t("common.copy")}
-              />
-              <BankLine
-                label={t("support.bic")}
-                value={BIC}
-                onCopy={() => copy(BIC, "bic")}
-                copied={copied === "bic"}
-                copyLabel={t("common.copy")}
-              />
-            </dl>
-          </div>
-        </div>
-
-        <DonationForm />
+        <GiftPanels />
 
         <MastodonShareButton className="mt-8" text={t("support.title")} />
 
@@ -228,160 +146,6 @@ export function SupportPage() {
           </div>
         </section>
       </main>
-    </div>
-  );
-}
-
-const AMOUNTS = [2500, 8000, 15000];
-
-function DonationForm() {
-  const { lang, tx } = useT();
-  const c = deepTx(tx, COPY[lang]);
-  const [naam, setNaam] = useState("");
-  const [email, setEmail] = useState("");
-  const [bedrag, setBedrag] = useState(2500);
-  const [custom, setCustom] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [ref, setRef] = useState<string | null>(null);
-  const [failed, setFailed] = useState(false);
-  const send = useServerFn(sendDonationConfirmation);
-
-  const cents = custom.trim()
-    ? Math.round(parseFloat(custom.replace(",", ".")) * 100) || 0
-    : bedrag;
-
-  async function submit(e: React.FormEvent) {
-    e.preventDefault();
-    if (busy || cents < 100) return;
-    setBusy(true);
-    setFailed(false);
-    try {
-      const res = await send({
-        data: { email: email.trim(), naam: naam.trim() || undefined, bedrag_cent: cents },
-      });
-      setRef(res.referentie);
-    } catch {
-      setFailed(true);
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  const fieldClass =
-    "mt-2 h-12 w-full rounded-xl border border-border bg-background px-4 text-sm outline-none focus:border-[color:var(--color-terracotta)]";
-  const labelClass = "text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground";
-
-  return (
-    <section className="mt-16 rounded-3xl border border-border bg-card p-6 shadow-sm md:p-10">
-      <h2 className="font-serif text-2xl italic text-[color:var(--ink-forest)] md:text-3xl">
-        {c.formTitle}
-      </h2>
-      <p className="mt-3 text-sm leading-relaxed text-foreground/90">{c.formBody}</p>
-
-      {ref ? (
-        <div className="mt-6 rounded-2xl border border-[color:var(--color-sage)] bg-[color:var(--surface-page)] p-5">
-          <p className="text-sm">{formatT(c.thanks, { email })}</p>
-          <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
-            {c.structuredRef}
-          </p>
-          <p className="mt-1 font-mono text-lg text-[color:var(--ink-forest)]">{ref}</p>
-        </div>
-      ) : (
-        <form onSubmit={submit} className="mt-6 grid gap-5">
-          <div className="flex flex-wrap gap-2">
-            {AMOUNTS.map((a) => (
-              <button
-                key={a}
-                type="button"
-                onClick={() => {
-                  setBedrag(a);
-                  setCustom("");
-                }}
-                className={`min-h-[48px] rounded-full border px-5 text-sm font-semibold transition-colors ${
-                  !custom.trim() && bedrag === a
-                    ? "border-[color:var(--color-terracotta)] bg-[color:var(--color-terracotta)] text-white"
-                    : "border-border hover:border-[color:var(--color-terracotta)]"
-                }`}
-              >
-                €{a / 100}
-              </button>
-            ))}
-            <input
-              inputMode="decimal"
-              placeholder={c.amountPlaceholder}
-              value={custom}
-              onChange={(e) => setCustom(e.target.value)}
-              className="h-12 w-36 rounded-full border border-border bg-background px-4 text-sm outline-none focus:border-[color:var(--color-terracotta)]"
-            />
-          </div>
-          <div className="grid gap-5 sm:grid-cols-2">
-            <label className="block min-w-0">
-              <span className={labelClass}>{c.nameLabel}</span>
-              <input
-                value={naam}
-                maxLength={120}
-                onChange={(e) => setNaam(e.target.value)}
-                className={fieldClass}
-              />
-            </label>
-            <label className="block min-w-0">
-              <span className={labelClass}>{c.emailLabel}</span>
-              <input
-                type="email"
-                required
-                maxLength={255}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={fieldClass}
-              />
-            </label>
-          </div>
-          <div className="flex flex-wrap items-center gap-4">
-            <button
-              type="submit"
-              disabled={busy || cents < 100}
-              className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-[color:var(--surface-forest)] px-6 text-[11px] font-semibold uppercase tracking-[0.2em] text-[color:var(--color-cream)] transition-colors hover:bg-[color:var(--color-terracotta)] disabled:opacity-60"
-            >
-              {busy && <Loader2 className="h-4 w-4 animate-spin" />}
-              {c.submit}
-            </button>
-            {failed && <span className="text-sm text-destructive">{c.failed}</span>}
-          </div>
-        </form>
-      )}
-    </section>
-  );
-}
-
-function BankLine({
-  label,
-  value,
-  onCopy,
-  copied,
-  copyLabel,
-}: {
-  label: string;
-  value: string;
-  onCopy: () => void;
-  copied: boolean;
-  copyLabel: string;
-}) {
-  return (
-    <div className="flex items-center justify-between gap-3 border-b border-border/60 pb-3">
-      <div className="min-w-0">
-        <dt className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
-          {label}
-        </dt>
-        <dd className="mt-1 break-all font-medium">{value}</dd>
-      </div>
-      <button
-        type="button"
-        onClick={onCopy}
-        className="inline-flex shrink-0 min-h-[48px] sm:min-h-[36px] items-center gap-1 rounded-full border border-border px-3 text-xs hover:border-[color:var(--color-terracotta)]"
-      >
-        <Copy className="h-3.5 w-3.5" />
-        {copied ? "✓" : copyLabel}
-      </button>
     </div>
   );
 }

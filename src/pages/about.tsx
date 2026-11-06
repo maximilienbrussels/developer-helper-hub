@@ -196,7 +196,7 @@ export function AboutPage() {
                   <div className="min-w-0 sm:mt-4">
                     <p className="font-serif truncate text-xl italic">{m.name}</p>
                     <p className="mt-1 break-words text-[11px] uppercase leading-snug tracking-[0.12em] text-[color:var(--color-cream)]/90">
-                      {t(m.roleKey)}
+                      {m.role ? tx(m.role) : t(m.roleKey)}
                     </p>
                   </div>
                 </button>
@@ -223,7 +223,7 @@ export function AboutPage() {
                   >
                     <span className="font-serif text-lg italic">{b.name}</span>
                     <span className="text-[11px] uppercase tracking-[0.15em] text-[color:var(--color-cream)]/90">
-                      {t(b.roleKey)}
+                      {b.role ? tx(b.role) : t(b.roleKey)}
                     </span>
                   </button>
                 </li>
@@ -243,12 +243,14 @@ export function AboutPage() {
                   {active.name[0]}
                 </div>
                 <SheetTitle className="font-serif mt-4 text-2xl italic text-[color:var(--ink-forest)]">
-                  {active.name} — {t(active.roleKey)}
+                  {active.name} — {active.role ? tx(active.role) : t(active.roleKey)}
                 </SheetTitle>
               </SheetHeader>
-              <blockquote className="mt-6 border-l-2 border-[color:var(--color-terracotta)] pl-4 font-serif text-lg italic leading-relaxed text-foreground/90">
-                “{tx(active.quote)}”
-              </blockquote>
+              {active.quote && (
+                <blockquote className="mt-6 border-l-2 border-[color:var(--color-terracotta)] pl-4 font-serif text-lg italic leading-relaxed text-foreground/90">
+                  “{tx(active.quote)}”
+                </blockquote>
+              )}
               <p className="mt-5 text-sm font-light leading-relaxed text-foreground/90">
                 {tx(active.bio)}
               </p>

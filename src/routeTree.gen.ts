@@ -115,12 +115,15 @@ import { Route as ApiChatEmailRouteImport } from './routes/api/chat/email'
 import { Route as ApiCheckoutCreateSessionRouteImport } from './routes/api/checkout/create-session'
 import { Route as ApiDevHealthRouteImport } from './routes/api/dev/health'
 import { Route as ApiDevRunMigrationsRouteImport } from './routes/api/dev/run-migrations'
+import { Route as ApiDonationCreateSessionRouteImport } from './routes/api/donation/create-session'
 import { Route as ApiEmailSendTransactionalRouteImport } from './routes/api/email/send-transactional'
 import { Route as ApiEmailTestTemplatesRouteImport } from './routes/api/email/test-templates'
 import { Route as ApiGoogleStatusRouteImport } from './routes/api/google/status'
 import { Route as ApiGoogleSyncRouteImport } from './routes/api/google/sync'
 import { Route as ApiInfomaniakStatusRouteImport } from './routes/api/infomaniak/status'
 import { Route as ApiInfomaniakSyncRouteImport } from './routes/api/infomaniak/sync'
+import { Route as ApiInternshipApplyRouteImport } from './routes/api/internship/apply'
+import { Route as ApiInvitationOrderSessionRouteImport } from './routes/api/invitation/order-session'
 import { Route as ApiPaymentsCreateSessionRouteImport } from './routes/api/payments/create-session'
 import { Route as ApiPaymentsOrderSessionRouteImport } from './routes/api/payments/order-session'
 import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
@@ -699,6 +702,12 @@ const ApiDevRunMigrationsRoute = ApiDevRunMigrationsRouteImport.update({
   path: '/api/dev/run-migrations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiDonationCreateSessionRoute =
+  ApiDonationCreateSessionRouteImport.update({
+    id: '/api/donation/create-session',
+    path: '/api/donation/create-session',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiEmailSendTransactionalRoute =
   ApiEmailSendTransactionalRouteImport.update({
     id: '/api/email/send-transactional',
@@ -730,6 +739,17 @@ const ApiInfomaniakSyncRoute = ApiInfomaniakSyncRouteImport.update({
   path: '/api/infomaniak/sync',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiInternshipApplyRoute = ApiInternshipApplyRouteImport.update({
+  id: '/api/internship/apply',
+  path: '/api/internship/apply',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiInvitationOrderSessionRoute =
+  ApiInvitationOrderSessionRouteImport.update({
+    id: '/api/invitation/order-session',
+    path: '/api/invitation/order-session',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPaymentsCreateSessionRoute =
   ApiPaymentsCreateSessionRouteImport.update({
     id: '/api/payments/create-session',
@@ -1055,12 +1075,15 @@ export interface FileRoutesByFullPath {
   '/api/checkout/create-session': typeof ApiCheckoutCreateSessionRoute
   '/api/dev/health': typeof ApiDevHealthRoute
   '/api/dev/run-migrations': typeof ApiDevRunMigrationsRoute
+  '/api/donation/create-session': typeof ApiDonationCreateSessionRoute
   '/api/email/send-transactional': typeof ApiEmailSendTransactionalRoute
   '/api/email/test-templates': typeof ApiEmailTestTemplatesRoute
   '/api/google/status': typeof ApiGoogleStatusRoute
   '/api/google/sync': typeof ApiGoogleSyncRoute
   '/api/infomaniak/status': typeof ApiInfomaniakStatusRoute
   '/api/infomaniak/sync': typeof ApiInfomaniakSyncRoute
+  '/api/internship/apply': typeof ApiInternshipApplyRoute
+  '/api/invitation/order-session': typeof ApiInvitationOrderSessionRoute
   '/api/payments/create-session': typeof ApiPaymentsCreateSessionRoute
   '/api/payments/order-session': typeof ApiPaymentsOrderSessionRoute
   '/api/public/health': typeof ApiPublicHealthRoute
@@ -1207,12 +1230,15 @@ export interface FileRoutesByTo {
   '/api/checkout/create-session': typeof ApiCheckoutCreateSessionRoute
   '/api/dev/health': typeof ApiDevHealthRoute
   '/api/dev/run-migrations': typeof ApiDevRunMigrationsRoute
+  '/api/donation/create-session': typeof ApiDonationCreateSessionRoute
   '/api/email/send-transactional': typeof ApiEmailSendTransactionalRoute
   '/api/email/test-templates': typeof ApiEmailTestTemplatesRoute
   '/api/google/status': typeof ApiGoogleStatusRoute
   '/api/google/sync': typeof ApiGoogleSyncRoute
   '/api/infomaniak/status': typeof ApiInfomaniakStatusRoute
   '/api/infomaniak/sync': typeof ApiInfomaniakSyncRoute
+  '/api/internship/apply': typeof ApiInternshipApplyRoute
+  '/api/invitation/order-session': typeof ApiInvitationOrderSessionRoute
   '/api/payments/create-session': typeof ApiPaymentsCreateSessionRoute
   '/api/payments/order-session': typeof ApiPaymentsOrderSessionRoute
   '/api/public/health': typeof ApiPublicHealthRoute
@@ -1364,12 +1390,15 @@ export interface FileRoutesById {
   '/api/checkout/create-session': typeof ApiCheckoutCreateSessionRoute
   '/api/dev/health': typeof ApiDevHealthRoute
   '/api/dev/run-migrations': typeof ApiDevRunMigrationsRoute
+  '/api/donation/create-session': typeof ApiDonationCreateSessionRoute
   '/api/email/send-transactional': typeof ApiEmailSendTransactionalRoute
   '/api/email/test-templates': typeof ApiEmailTestTemplatesRoute
   '/api/google/status': typeof ApiGoogleStatusRoute
   '/api/google/sync': typeof ApiGoogleSyncRoute
   '/api/infomaniak/status': typeof ApiInfomaniakStatusRoute
   '/api/infomaniak/sync': typeof ApiInfomaniakSyncRoute
+  '/api/internship/apply': typeof ApiInternshipApplyRoute
+  '/api/invitation/order-session': typeof ApiInvitationOrderSessionRoute
   '/api/payments/create-session': typeof ApiPaymentsCreateSessionRoute
   '/api/payments/order-session': typeof ApiPaymentsOrderSessionRoute
   '/api/public/health': typeof ApiPublicHealthRoute
@@ -1521,12 +1550,15 @@ export interface FileRouteTypes {
     | '/api/checkout/create-session'
     | '/api/dev/health'
     | '/api/dev/run-migrations'
+    | '/api/donation/create-session'
     | '/api/email/send-transactional'
     | '/api/email/test-templates'
     | '/api/google/status'
     | '/api/google/sync'
     | '/api/infomaniak/status'
     | '/api/infomaniak/sync'
+    | '/api/internship/apply'
+    | '/api/invitation/order-session'
     | '/api/payments/create-session'
     | '/api/payments/order-session'
     | '/api/public/health'
@@ -1673,12 +1705,15 @@ export interface FileRouteTypes {
     | '/api/checkout/create-session'
     | '/api/dev/health'
     | '/api/dev/run-migrations'
+    | '/api/donation/create-session'
     | '/api/email/send-transactional'
     | '/api/email/test-templates'
     | '/api/google/status'
     | '/api/google/sync'
     | '/api/infomaniak/status'
     | '/api/infomaniak/sync'
+    | '/api/internship/apply'
+    | '/api/invitation/order-session'
     | '/api/payments/create-session'
     | '/api/payments/order-session'
     | '/api/public/health'
@@ -1829,12 +1864,15 @@ export interface FileRouteTypes {
     | '/api/checkout/create-session'
     | '/api/dev/health'
     | '/api/dev/run-migrations'
+    | '/api/donation/create-session'
     | '/api/email/send-transactional'
     | '/api/email/test-templates'
     | '/api/google/status'
     | '/api/google/sync'
     | '/api/infomaniak/status'
     | '/api/infomaniak/sync'
+    | '/api/internship/apply'
+    | '/api/invitation/order-session'
     | '/api/payments/create-session'
     | '/api/payments/order-session'
     | '/api/public/health'
@@ -1964,12 +2002,15 @@ export interface RootRouteChildren {
   ApiCheckoutCreateSessionRoute: typeof ApiCheckoutCreateSessionRoute
   ApiDevHealthRoute: typeof ApiDevHealthRoute
   ApiDevRunMigrationsRoute: typeof ApiDevRunMigrationsRoute
+  ApiDonationCreateSessionRoute: typeof ApiDonationCreateSessionRoute
   ApiEmailSendTransactionalRoute: typeof ApiEmailSendTransactionalRoute
   ApiEmailTestTemplatesRoute: typeof ApiEmailTestTemplatesRoute
   ApiGoogleStatusRoute: typeof ApiGoogleStatusRoute
   ApiGoogleSyncRoute: typeof ApiGoogleSyncRoute
   ApiInfomaniakStatusRoute: typeof ApiInfomaniakStatusRoute
   ApiInfomaniakSyncRoute: typeof ApiInfomaniakSyncRoute
+  ApiInternshipApplyRoute: typeof ApiInternshipApplyRoute
+  ApiInvitationOrderSessionRoute: typeof ApiInvitationOrderSessionRoute
   ApiPaymentsCreateSessionRoute: typeof ApiPaymentsCreateSessionRoute
   ApiPaymentsOrderSessionRoute: typeof ApiPaymentsOrderSessionRoute
   ApiPublicHealthRoute: typeof ApiPublicHealthRoute
@@ -2753,6 +2794,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiDevRunMigrationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/donation/create-session': {
+      id: '/api/donation/create-session'
+      path: '/api/donation/create-session'
+      fullPath: '/api/donation/create-session'
+      preLoaderRoute: typeof ApiDonationCreateSessionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/email/send-transactional': {
       id: '/api/email/send-transactional'
       path: '/api/email/send-transactional'
@@ -2793,6 +2841,20 @@ declare module '@tanstack/react-router' {
       path: '/api/infomaniak/sync'
       fullPath: '/api/infomaniak/sync'
       preLoaderRoute: typeof ApiInfomaniakSyncRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/internship/apply': {
+      id: '/api/internship/apply'
+      path: '/api/internship/apply'
+      fullPath: '/api/internship/apply'
+      preLoaderRoute: typeof ApiInternshipApplyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/invitation/order-session': {
+      id: '/api/invitation/order-session'
+      path: '/api/invitation/order-session'
+      fullPath: '/api/invitation/order-session'
+      preLoaderRoute: typeof ApiInvitationOrderSessionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/payments/create-session': {
@@ -3313,12 +3375,15 @@ const rootRouteChildren: RootRouteChildren = {
   ApiCheckoutCreateSessionRoute: ApiCheckoutCreateSessionRoute,
   ApiDevHealthRoute: ApiDevHealthRoute,
   ApiDevRunMigrationsRoute: ApiDevRunMigrationsRoute,
+  ApiDonationCreateSessionRoute: ApiDonationCreateSessionRoute,
   ApiEmailSendTransactionalRoute: ApiEmailSendTransactionalRoute,
   ApiEmailTestTemplatesRoute: ApiEmailTestTemplatesRoute,
   ApiGoogleStatusRoute: ApiGoogleStatusRoute,
   ApiGoogleSyncRoute: ApiGoogleSyncRoute,
   ApiInfomaniakStatusRoute: ApiInfomaniakStatusRoute,
   ApiInfomaniakSyncRoute: ApiInfomaniakSyncRoute,
+  ApiInternshipApplyRoute: ApiInternshipApplyRoute,
+  ApiInvitationOrderSessionRoute: ApiInvitationOrderSessionRoute,
   ApiPaymentsCreateSessionRoute: ApiPaymentsCreateSessionRoute,
   ApiPaymentsOrderSessionRoute: ApiPaymentsOrderSessionRoute,
   ApiPublicHealthRoute: ApiPublicHealthRoute,

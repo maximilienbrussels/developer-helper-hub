@@ -27,6 +27,26 @@ import {
 import { Illustration } from "@/components/Illustration";
 import chaletDagdeelAsset from "@/assets/illustrations/chalet-dagdeel.webp.asset.json";
 import { usePricing } from "@/lib/use-pricing";
+import { SpacePhotos, type SpacePhoto } from "@/components/SpacePhotos";
+import { OLD_ASSETS } from "@/lib/old-site-assets";
+
+const SPACE_PHOTOS: Record<string, { src: string; alt: Record<"nl" | "fr" | "en", string> }[]> = {
+  chalet: [
+    { src: OLD_ASSETS.verhuurChaletBinnen, alt: { nl: "Binnen in het houten chalet", fr: "L'intérieur du chalet en bois", en: "Inside the wooden chalet" } },
+    { src: OLD_ASSETS.verhuurChaletBuiten, alt: { nl: "Het chalet aan de geplaveide binnenkoer", fr: "Le chalet et sa cour pavée", en: "The chalet and its cobbled courtyard" } },
+  ],
+  zaal: [
+    { src: OLD_ASSETS.verhuurZaalVergadertafel, alt: { nl: "De zaal met de lange vergadertafel", fr: "La salle avec la grande table de réunion", en: "The room with the long meeting table" } },
+    { src: OLD_ASSETS.verhuurZaalKindertafels, alt: { nl: "De zaal ingericht voor kinderen", fr: "La salle aménagée pour les enfants", en: "The room set up for children" } },
+    { src: OLD_ASSETS.verhuurKeuken, alt: { nl: "De uitgeruste keuken", fr: "La cuisine équipée", en: "The equipped kitchen" } },
+    { src: OLD_ASSETS.verhuurOnthaal, alt: { nl: "Het onthaal", fr: "L'accueil", en: "The welcome desk" } },
+    { src: OLD_ASSETS.verhuurVestiaire, alt: { nl: "De vestiaire", fr: "Le vestiaire", en: "The cloakroom" } },
+  ],
+  weide: [
+    { src: OLD_ASSETS.verhuurBinnenkoer, alt: { nl: "De groene binnenkoer met picknicktafels", fr: "La cour verte et ses tables de pique-nique", en: "The green courtyard with picnic tables" } },
+    { src: OLD_ASSETS.sfeerSchapenKruiwagen, alt: { nl: "De weide met de schapen", fr: "La prairie et les moutons", en: "The meadow with the sheep" } },
+  ],
+};
 
 const COPY: Record<
   Lang,
@@ -201,13 +221,17 @@ export function RentalSpaces() {
               key={s.slug}
               className="flex flex-col rounded-3xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-md"
             >
-              {s.slug === "chalet" && (
-                <Illustration
-                  src={chaletDagdeelAsset.url}
-                  alt={c.chaletAlt}
-                  className="mb-4 aspect-video w-full"
+              {SPACE_PHOTOS[s.slug] ? (
+                <SpacePhotos
+                  label={copy.title}
+                  photos={SPACE_PHOTOS[s.slug]!.map((p): SpacePhoto => ({
+                    src: p.src,
+                    alt: tx(p.alt[lang === "fr" || lang === "en" ? lang : lang === "nl" ? "nl" : "en"]),
+                  }))}
                 />
-              )}
+              ) : s.slug === "chalet" ? (
+                <Illustration src={chaletDagdeelAsset.url} alt={c.chaletAlt} className="mb-4 aspect-video w-full" />
+              ) : null}
               <h4 className="font-serif text-xl leading-snug text-[color:var(--ink-forest)]">
                 {copy.title}
               </h4>

@@ -1,11 +1,11 @@
 /**
  * Ressources / downloads — pedagogische fiches en documenten.
- * De PDF's staan voorlopig nog op de oude site; vervang de URL's na de migratie.
+ * Alle bestanden staan op onze eigen opslag (overgenomen van de oude site).
  */
 
 import type { Lang } from "@/lib/i18n";
 import type { PageKey } from "@/lib/routes-i18n";
-import { OLD_SITE } from "@/lib/transparency-content";
+import { OLD_ASSETS, FICHE_FILES } from "@/lib/old-site-assets";
 
 export type ResourceCategory = "pedagogie" | "moestuin" | "dieren" | "vzw";
 
@@ -165,7 +165,7 @@ export const RESOURCES: Resource[] = [
       fr: "Rémunérations, présences, marchés publics et subsides.",
       en: "Pay, attendance, public contracts and subsidies.",
     },
-    href: `${OLD_SITE}/web/content/8196?download=true`,
+    href: OLD_ASSETS.transparantierapport2025,
     external: true,
   },
   {
@@ -181,7 +181,7 @@ export const RESOURCES: Resource[] = [
       fr: "Nos missions, l'équipe, les projets et les événements de l'année.",
       en: "Our missions, the team, the projects and the events of the year.",
     },
-    href: `${OLD_SITE}/web/content/8195?download=true`,
+    href: OLD_ASSETS.activiteitenverslag2025,
     external: true,
   },
   {
@@ -207,26 +207,25 @@ export type AnimalSheet = {
   files: Partial<Record<"nl" | "en", string>>;
 };
 
-const CONTENT = (id: number) => `${OLD_SITE}/web/content/${id}?download=true`;
 
 export const ANIMAL_SHEETS: AnimalSheet[] = [
   {
     id: "hoenders",
     image: "/fiches/hoenders.webp",
     title: { nl: "Hennen & hanen", fr: "Les poules et coqs", en: "Hens & roosters" },
-    files: { en: CONTENT(6700), nl: CONTENT(6674) },
+    files: { en: FICHE_FILES["hoenders-en"], nl: FICHE_FILES["hoenders-nl"] },
   },
   {
     id: "konijnen",
     image: "/fiches/konijnen.webp",
     title: { nl: "Huiskonijnen", fr: "Les lapins domestiques", en: "Domestic rabbits" },
-    files: { en: CONTENT(6686), nl: CONTENT(6672) },
+    files: { en: FICHE_FILES["konijnen-en"], nl: FICHE_FILES["konijnen-nl"] },
   },
   {
     id: "shetlandponys",
     image: "/fiches/shetlandponys.webp",
     title: { nl: "Shetlandpony's", fr: "Les poneys Shetland", en: "Shetland ponies" },
-    files: { en: CONTENT(6698), nl: CONTENT(6678) },
+    files: { en: FICHE_FILES["shetlandponys-en"], nl: FICHE_FILES["shetlandponys-nl"] },
   },
   {
     id: "ardense-schapen",
@@ -236,49 +235,49 @@ export const ANIMAL_SHEETS: AnimalSheet[] = [
       fr: "Les moutons roux ardennais",
       en: "Ardennes Red sheep",
     },
-    files: { en: CONTENT(6680), nl: CONTENT(6662) },
+    files: { en: FICHE_FILES["ardense-schapen-en"], nl: FICHE_FILES["ardense-schapen-nl"] },
   },
   {
     id: "dwerggeiten",
     image: "/fiches/dwerggeiten.webp",
     title: { nl: "Dwerggeiten", fr: "Les chèvres naines", en: "Dwarf goats" },
-    files: { nl: CONTENT(6664) },
+    files: { nl: FICHE_FILES["dwerggeiten-nl"] },
   },
   {
     id: "gansen",
     image: "/fiches/gansen.webp",
     title: { nl: "Gansen", fr: "Les oies", en: "Geese" },
-    files: { en: CONTENT(6692), nl: CONTENT(6670) },
+    files: { en: FICHE_FILES["gansen-en"], nl: FICHE_FILES["gansen-nl"] },
   },
   {
     id: "ezels",
     image: "/fiches/ezels.webp",
     title: { nl: "Ezels", fr: "Les ânes", en: "Common donkeys" },
-    files: { en: CONTENT(6684), nl: CONTENT(6668) },
+    files: { en: FICHE_FILES["ezels-en"], nl: FICHE_FILES["ezels-nl"] },
   },
   {
     id: "ouessant-schapen",
     image: "/fiches/ouessant-schapen.webp",
     title: { nl: "Ouessantschapen", fr: "Les moutons d'Ouessant", en: "Ouessant sheep" },
-    files: { en: CONTENT(6696), nl: CONTENT(6676) },
+    files: { en: FICHE_FILES["ouessant-schapen-en"], nl: FICHE_FILES["ouessant-schapen-nl"] },
   },
   {
     id: "alpacas",
     image: "/fiches/alpacas.webp",
     title: { nl: "Alpaca's", fr: "Les alpagas", en: "Alpacas" },
-    files: { en: CONTENT(6682), nl: CONTENT(6660) },
+    files: { en: FICHE_FILES["alpacas-en"], nl: FICHE_FILES["alpacas-nl"] },
   },
   {
     id: "eenden",
     image: "/fiches/eenden.webp",
     title: { nl: "Eenden", fr: "Les canards", en: "Ducks" },
-    files: { en: CONTENT(6688), nl: CONTENT(6666) },
+    files: { en: FICHE_FILES["eenden-en"], nl: FICHE_FILES["eenden-nl"] },
   },
 ];
 
 export const FARM_MAP = {
   image: "/fiches/plan-ferme.webp",
-  href: CONTENT(1158),
+  href: "/imported-assets/plan-ferme.png",
   title: { nl: "Plattegrond van de boerderij", fr: "Le plan de la ferme", en: "Map of the farm" },
   description: {
     nl: "Vind de weides, ingangen en bezoekpunten terug voor je komt.",

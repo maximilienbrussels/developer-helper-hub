@@ -1,3 +1,4 @@
+import { OLD_ASSETS } from "@/lib/old-site-assets";
 /**
  * Transparantie: subsidies, studies, overheidsopdrachten en jaarverslag.
  * Cijfers overgenomen van lafermeduparcmaximilien.be/transparence (boekjaar 2025).
@@ -170,7 +171,7 @@ export const TENDERS_2025: MoneyRow[] = [
   { project: "Maxi balades", funder: "Stad Brussel", amount: "5 700 €" },
 ];
 
-export const TRANSPARENCY_REPORT_URL = `${OLD_SITE}/web/content/8196?download=true`;
-export const ANNUAL_REPORT_URL = `${OLD_SITE}/web/content/8195?download=true`;
+export const TRANSPARENCY_REPORT_URL = OLD_ASSETS.transparantierapport2025;
+export const ANNUAL_REPORT_URL = OLD_ASSETS.activiteitenverslag2025;
 export const LINKEDIN_URL =
   "https://www.linkedin.com/in/la-ferme-du-parc-maximilien-12903990/";

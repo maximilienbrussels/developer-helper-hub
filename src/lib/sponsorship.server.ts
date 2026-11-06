@@ -8,24 +8,10 @@ import { shell, button, infoCard, escapeHtml } from "@/lib/email-shell";
 import { sendMail } from "@/lib/email.server";
 import { PUBLIC_SITE_URL } from "@/lib/routes-i18n";
 
-export type SponsorLang = "nl" | "fr" | "en";
+import { SPONSOR_TIERS, tierById, type SponsorLang, type SponsorTier } from "@/lib/sponsor-tiers";
 
-export type SponsorTier = {
-  id: string;
-  amountCents: number;
-  interval: "month" | "year";
-  label: Record<SponsorLang, string>;
-};
-
-export const SPONSOR_TIERS: SponsorTier[] = [
-  { id: "basis", amountCents: 500, interval: "month", label: { nl: "€5 / maand", fr: "5 € / mois", en: "€5 / month" } },
-  { id: "vriend", amountCents: 1000, interval: "month", label: { nl: "€10 / maand", fr: "10 € / mois", en: "€10 / month" } },
-  { id: "beschermer", amountCents: 5000, interval: "year", label: { nl: "€50 / jaar", fr: "50 € / an", en: "€50 / year" } },
-];
-
-export function tierById(id: string): SponsorTier | null {
-  return SPONSOR_TIERS.find((t) => t.id === id) ?? null;
-}
+export { SPONSOR_TIERS, tierById };
+export type { SponsorLang, SponsorTier };
 
 export type SponsorshipRow = {
   id: string;

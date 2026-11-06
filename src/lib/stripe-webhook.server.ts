@@ -59,6 +59,17 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
     return;
   }
 
+  // Online gift: Stripe stuurt het betaalbewijs; geen boeking of factuur nodig.
+  if (meta["kind"] === "donation") return;
+
+  // Gedrukte uitnodigingskaarten: drukopdracht naar de webshopinbox.
+  if (meta["kind"] === "invitation") {
+    await notifyInvitationOrder(session).catch((err) =>
+      console.error("[stripe-webhook] uitnodigingsbestelling melden mislukt", err),
+    );
+    return;
+  }
+
   // Webshopbestelling: status op `paid`, factuur genereren en mailen.
   if (meta["order_id"]) {
     const orderId = Number(meta["order_id"]);
@@ -206,4 +217,39 @@ export async function processStripeWebhook(request: Request): Promise<Response> 
   }
 
   return Response.json({ received: true });
+}
+
+/** Meldt een betaalde bestelling van gedrukte uitnodigingskaarten aan de webshopinbox. */
+async function notifyInvitationOrder(session: Stripe.Checkout.Session): Promise<void> {
+  const m = session.metadata ?? {};
+  const { sendMail } = await import("@/lib/email.server");
+  const { escapeHtml } = await import("@/lib/email-shell");
+  const { recipientsFor } = await import("@/lib/contact-routes.server");
+  const s = session as Stripe.Checkout.Session & {
+    collected_information?: { shipping_details?: { name?: string; address?: Stripe.Address } | null } | null;
+    shipping_details?: { name?: string; address?: Stripe.Address } | null;
+  };
+  const ship = s.collected_information?.shipping_details ?? s.shipping_details;
+  const a = ship?.address;
+  const rows: [string, string][] = [
+    ["Aantal kaarten", m["qty"] ?? "?"],
+    ["Levering", m["delivery"] === "post" ? "Per post" : "Ophalen op de boerderij"],
+    ...(a ? ([["Adres", `${ship?.name ?? ""}, ${a.line1 ?? ""} ${a.line2 ?? ""}, ${a.postal_code ?? ""} ${a.city ?? ""}`]] as [string, string][]) : []),
+    ["Klant", `${session.customer_details?.email ?? ""} ${session.customer_details?.phone ?? ""}`],
+    ["Taal kaart", m["card_lang"] ?? ""],
+    ["Kind | leeftijd | gast", m["card_people"] ?? ""],
+    ["Datum en uur", m["card_when"] ?? ""],
+    ["Antwoord aan", m["card_rsvp"] ?? ""],
+    ["Extra tekst", m["card_note"] ?? ""],
+    ["Betaald", `€ ${((session.amount_total ?? 0) / 100).toFixed(2)}`],
+  ];
+  await sendMail({
+    to: await recipientsFor("webshop"),
+    subject: `Drukopdracht uitnodigingen — ${m["qty"]} kaarten (${m["delivery"] === "post" ? "post" : "ophalen"})`,
+    html: `<h2>Nieuwe bestelling gedrukte uitnodigingen</h2><table cellpadding="6">${rows
+      .map(([k, v]) => `<tr><td style="color:#6b6b6b">${escapeHtml(k)}</td><td>${escapeHtml(v)}</td></tr>`)
+      .join("")}</table><p>Maak de kaarten opnieuw aan in de uitnodigingseditor op /bezoekers/familie met bovenstaande gegevens.</p>`,
+    replyTo: session.customer_details?.email ?? undefined,
+    kind: "invitation-order",
+  });
 }
