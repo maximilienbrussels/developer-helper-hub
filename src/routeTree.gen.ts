@@ -118,6 +118,7 @@ import { Route as ApiDevRunMigrationsRouteImport } from './routes/api/dev/run-mi
 import { Route as ApiDonationCreateSessionRouteImport } from './routes/api/donation/create-session'
 import { Route as ApiEmailSendTransactionalRouteImport } from './routes/api/email/send-transactional'
 import { Route as ApiEmailTestTemplatesRouteImport } from './routes/api/email/test-templates'
+import { Route as ApiEventsCheckoutRouteImport } from './routes/api/events/checkout'
 import { Route as ApiGoogleStatusRouteImport } from './routes/api/google/status'
 import { Route as ApiGoogleSyncRouteImport } from './routes/api/google/sync'
 import { Route as ApiInfomaniakStatusRouteImport } from './routes/api/infomaniak/status'
@@ -719,6 +720,11 @@ const ApiEmailTestTemplatesRoute = ApiEmailTestTemplatesRouteImport.update({
   path: '/api/email/test-templates',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiEventsCheckoutRoute = ApiEventsCheckoutRouteImport.update({
+  id: '/api/events/checkout',
+  path: '/api/events/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiGoogleStatusRoute = ApiGoogleStatusRouteImport.update({
   id: '/api/google/status',
   path: '/api/google/status',
@@ -1078,6 +1084,7 @@ export interface FileRoutesByFullPath {
   '/api/donation/create-session': typeof ApiDonationCreateSessionRoute
   '/api/email/send-transactional': typeof ApiEmailSendTransactionalRoute
   '/api/email/test-templates': typeof ApiEmailTestTemplatesRoute
+  '/api/events/checkout': typeof ApiEventsCheckoutRoute
   '/api/google/status': typeof ApiGoogleStatusRoute
   '/api/google/sync': typeof ApiGoogleSyncRoute
   '/api/infomaniak/status': typeof ApiInfomaniakStatusRoute
@@ -1233,6 +1240,7 @@ export interface FileRoutesByTo {
   '/api/donation/create-session': typeof ApiDonationCreateSessionRoute
   '/api/email/send-transactional': typeof ApiEmailSendTransactionalRoute
   '/api/email/test-templates': typeof ApiEmailTestTemplatesRoute
+  '/api/events/checkout': typeof ApiEventsCheckoutRoute
   '/api/google/status': typeof ApiGoogleStatusRoute
   '/api/google/sync': typeof ApiGoogleSyncRoute
   '/api/infomaniak/status': typeof ApiInfomaniakStatusRoute
@@ -1393,6 +1401,7 @@ export interface FileRoutesById {
   '/api/donation/create-session': typeof ApiDonationCreateSessionRoute
   '/api/email/send-transactional': typeof ApiEmailSendTransactionalRoute
   '/api/email/test-templates': typeof ApiEmailTestTemplatesRoute
+  '/api/events/checkout': typeof ApiEventsCheckoutRoute
   '/api/google/status': typeof ApiGoogleStatusRoute
   '/api/google/sync': typeof ApiGoogleSyncRoute
   '/api/infomaniak/status': typeof ApiInfomaniakStatusRoute
@@ -1553,6 +1562,7 @@ export interface FileRouteTypes {
     | '/api/donation/create-session'
     | '/api/email/send-transactional'
     | '/api/email/test-templates'
+    | '/api/events/checkout'
     | '/api/google/status'
     | '/api/google/sync'
     | '/api/infomaniak/status'
@@ -1708,6 +1718,7 @@ export interface FileRouteTypes {
     | '/api/donation/create-session'
     | '/api/email/send-transactional'
     | '/api/email/test-templates'
+    | '/api/events/checkout'
     | '/api/google/status'
     | '/api/google/sync'
     | '/api/infomaniak/status'
@@ -1867,6 +1878,7 @@ export interface FileRouteTypes {
     | '/api/donation/create-session'
     | '/api/email/send-transactional'
     | '/api/email/test-templates'
+    | '/api/events/checkout'
     | '/api/google/status'
     | '/api/google/sync'
     | '/api/infomaniak/status'
@@ -2005,6 +2017,7 @@ export interface RootRouteChildren {
   ApiDonationCreateSessionRoute: typeof ApiDonationCreateSessionRoute
   ApiEmailSendTransactionalRoute: typeof ApiEmailSendTransactionalRoute
   ApiEmailTestTemplatesRoute: typeof ApiEmailTestTemplatesRoute
+  ApiEventsCheckoutRoute: typeof ApiEventsCheckoutRoute
   ApiGoogleStatusRoute: typeof ApiGoogleStatusRoute
   ApiGoogleSyncRoute: typeof ApiGoogleSyncRoute
   ApiInfomaniakStatusRoute: typeof ApiInfomaniakStatusRoute
@@ -2815,6 +2828,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiEmailTestTemplatesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/events/checkout': {
+      id: '/api/events/checkout'
+      path: '/api/events/checkout'
+      fullPath: '/api/events/checkout'
+      preLoaderRoute: typeof ApiEventsCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/google/status': {
       id: '/api/google/status'
       path: '/api/google/status'
@@ -3378,6 +3398,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiDonationCreateSessionRoute: ApiDonationCreateSessionRoute,
   ApiEmailSendTransactionalRoute: ApiEmailSendTransactionalRoute,
   ApiEmailTestTemplatesRoute: ApiEmailTestTemplatesRoute,
+  ApiEventsCheckoutRoute: ApiEventsCheckoutRoute,
   ApiGoogleStatusRoute: ApiGoogleStatusRoute,
   ApiGoogleSyncRoute: ApiGoogleSyncRoute,
   ApiInfomaniakStatusRoute: ApiInfomaniakStatusRoute,
