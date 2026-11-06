@@ -12,6 +12,6 @@
 - [x] Editable birthday invitation: print, PDF, paid printed order
 - [x] Internships with photos + application form with CV
 - [x] Rental room photos, real team, self-hosted reports/posters
-- [ ] Dated events from old site + registration on the agenda
+- [x] Admin-managed events with registration, capacity, waiting list, paid tickets, cancel link (old-site events from 2026 are already past)
 - [ ] Confirm print prices, BIC, tax wording, phone number (waiting on user)
 - [ ] Stripe connected for online gifts and card orders (waiting on user)

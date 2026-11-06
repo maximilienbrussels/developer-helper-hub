@@ -17,3 +17,4 @@
 - Keep pure OAuth URL validation in oauth-urls and internal return-path validation in redirect; share those rules across providers so callback cookies stay same-origin and malformed redirects cannot escape the site.
 - Use the central portal access result for login navigation, coalesce concurrent auth events, and surface failed checks without redirecting as denied; transient outages must not create login loops.
 - OAuth callbacks must pick their landing path through oauthLandingPath, and /auth auto-redirects go through the portal-login loop guard, because a path the current app mode cannot render bounces back to /auth in a loop.
+- Event registrations live in event-signup.server (self-migrating columns on `events` + `event_registrations`); seats are claimed in one statement that locks the event row, so concurrent sign-ups can never exceed capacity.
