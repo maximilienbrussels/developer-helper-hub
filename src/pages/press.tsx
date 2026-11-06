@@ -49,7 +49,7 @@ type Lang = "nl" | "fr" | "en";
 type T3 = Record<Lang, string>;
 
 const PRESS_EMAIL = "pers@maximilien.brussels";
-const PRESS_PHONE = "+32 2 201 56 09";
+const PRESS_PHONE = "+32 2 331 53 91";
 const PHOTOS_ZIP = "/pers/persfotos-maximilien.zip";
 
 const COPY = {
@@ -1015,7 +1015,7 @@ export function PressPage() {
                 <Mail className="h-4 w-4" /> {PRESS_EMAIL}
               </a>
               <a
-                href="tel:+3222015609"
+                href="tel:+3223315391"
                 className="inline-flex items-center gap-2 text-foreground hover:text-[color:var(--color-terracotta)]"
               >
                 <Phone className="h-4 w-4" /> {PRESS_PHONE}

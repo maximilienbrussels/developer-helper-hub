@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 
-import planFermeAsset from "@/assets/plan-ferme.png.asset.json";
+import planFermeAsset from "@/assets/plattegrond-ferme-maximilien.png.asset.json";
 import {
   ENTRANCE,
   FARM_MAP_DATA,
@@ -119,14 +119,15 @@ export function InteractiveMap({ className = "" }: { className?: string }) {
         </ul>
       </div>
 
-      <div className="relative overflow-hidden rounded-3xl border border-border bg-[color:var(--color-surface-forest)]/10 shadow-sm">
+      <div className="relative mx-auto max-w-2xl overflow-hidden rounded-3xl border border-border bg-[color:var(--color-surface-forest)]/10 shadow-sm">
         <img
           src={MAP_URL}
           onError={handleImageError}
           alt={c.title}
-          width={1600}
-          height={1100}
+          width={980}
+          height={1377}
           loading="lazy"
+          decoding="async"
           className="block h-auto w-full select-none"
           draggable={false}
         />
@@ -137,9 +138,9 @@ export function InteractiveMap({ className = "" }: { className?: string }) {
           style={{ left: `${ENTRANCE.mapCoords.x}%`, top: `${ENTRANCE.mapCoords.y}%` }}
         >
           <div className="relative flex flex-col items-center">
-            <span className="absolute inset-0 -m-2 animate-ping rounded-full bg-emerald-400/50" aria-hidden />
+            <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400/50" aria-hidden />
             <span className="relative grid size-9 place-items-center rounded-full border-2 border-white bg-emerald-600 text-base shadow-lg">🚪</span>
-            <span className="mt-1 hidden whitespace-nowrap rounded-full bg-emerald-700 px-2 py-0.5 text-[10px] font-semibold text-white shadow sm:block">
+            <span className="sr-only">
               {lang === "fr" ? ENTRANCE.ctaFr : lang === "en" ? ENTRANCE.ctaEn : ENTRANCE.ctaNl}
             </span>
           </div>

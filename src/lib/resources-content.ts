@@ -1,3 +1,4 @@
+import planAsset from "@/assets/plattegrond-ferme-maximilien.png.asset.json";
 /**
  * Ressources / downloads — pedagogische fiches en documenten.
  * Alle bestanden staan op onze eigen opslag (overgenomen van de oude site).
@@ -276,8 +277,8 @@ export const ANIMAL_SHEETS: AnimalSheet[] = [
 ];
 
 export const FARM_MAP = {
-  image: "/fiches/plan-ferme.webp",
-  href: "/imported-assets/plan-ferme.png",
+  image: planAsset.url,
+  href: planAsset.url,
   title: { nl: "Plattegrond van de boerderij", fr: "Le plan de la ferme", en: "Map of the farm" },
   description: {
     nl: "Vind de weides, ingangen en bezoekpunten terug voor je komt.",

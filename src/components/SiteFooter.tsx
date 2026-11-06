@@ -10,7 +10,7 @@ import { LocationLink } from "./LocationLink";
 import { RoutBadge } from "./RoutBadge";
 import { PwaInstallButton } from "@/components/pwa/PwaInstallButton";
 // Farm identity constants — brief specifies address Quai du Batelage 2.
-const PHONE = "+32 2 201 56 09";
+const PHONE = "+32 2 331 53 91";
 
 const LINK = "hover:text-[color:var(--color-terracotta)]";
 

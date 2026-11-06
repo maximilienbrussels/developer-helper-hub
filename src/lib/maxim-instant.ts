@@ -725,7 +725,7 @@ export function instantAnswer(
       .replace(/Schipperijkaai 2, 1000 Brussel/g, live.address)
       .replace(/Quai du Batelage 2, 1000 Bruxelles/g, live.address);
   }
-  if (live?.phone) answer = answer.replace(/\+32 2 201 56 09/g, live.phone);
+  if (live?.phone) answer = answer.replace(/\+32 2 331 53 91/g, live.phone);
   if (live?.email) answer = answer.replace(/contact@maximilien\.brussels/g, live.email);
   const follow = action.followUp ? (action.followUp[lang] ?? action.followUp.nl) : null;
   return follow ? `${answer} ${follow}` : answer;

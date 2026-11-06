@@ -18,7 +18,7 @@ const FIELDS: Array<{ key: keyof SiteContact; label: string; placeholder: string
   { key: "address", label: "Straat en nummer", placeholder: "Schipperijkaai 2" },
   { key: "postalCode", label: "Postcode", placeholder: "1000" },
   { key: "city", label: "Gemeente", placeholder: "Brussel" },
-  { key: "phone", label: "Telefoon", placeholder: "+32 2 201 56 09" },
+  { key: "phone", label: "Telefoon", placeholder: "+32 2 331 53 91" },
   { key: "email", label: "E-mailadres", placeholder: "contact@maximilien.brussels" },
 ];
 

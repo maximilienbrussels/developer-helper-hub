@@ -6,9 +6,10 @@
 const ORG_ID = 1;
 
 const FALLBACK = {
-  naam: "ASBL Maximilien",
-  iban: "BE00 0000 0000 0000",
-  bic: "GEBABEBB",
+  naam: "ASBL La Ferme du Parc Maximilien",
+  // Geen verzonnen rekening: zonder ingestelde IBAN tonen mails geen betaalblok.
+  iban: "",
+  bic: "",
 };
 
 export async function getOrganisation(): Promise<{

@@ -18,7 +18,7 @@ import sfeerKinderenZadenAsset from "@/assets/sfeer-kinderen-zaden.jpg.asset.jso
 const sfeerKinderenZaden = sfeerKinderenZadenAsset.url;
 import sfeerKinderenKaartenAsset from "@/assets/sfeer-kinderen-kaarten.jpg.asset.json";
 const sfeerKinderenKaarten = sfeerKinderenKaartenAsset.url;
-import planFermeAsset from "@/assets/plan-ferme.png.asset.json";
+import planFermeAsset from "@/assets/plattegrond-ferme-maximilien.png.asset.json";
 const planFerme = planFermeAsset.url;
 import { handleImageError } from "@/lib/image-fallback";
 
@@ -183,13 +183,15 @@ export function HubLandingTemplate({
         {showPlan && (
           <section className="mt-16 md:mt-20">
             <h2 className="font-serif text-2xl text-[color:var(--ink-forest)]">{c.planTitle}</h2>
-            <figure className="mt-6 overflow-hidden rounded-3xl border border-border/60 bg-[color:var(--surface-page)]/70 p-3 shadow-sm md:p-5">
+            <figure className="mx-auto mt-6 max-w-2xl overflow-hidden rounded-3xl border border-border/60 bg-[color:var(--surface-page)]/70 p-3 shadow-sm md:p-5">
               <img
                 onError={handleImageError}
                 src={planFerme}
                 alt={c.planAlt}
                 loading="lazy"
-                className="w-full rounded-2xl"
+                width={980}
+                height={1377}
+                className="h-auto w-full rounded-2xl"
               />
             </figure>
           </section>

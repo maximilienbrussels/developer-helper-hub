@@ -203,7 +203,7 @@ export async function persistOrder(input: OrderInput): Promise<OrderResult> {
     if (input.method === "manual_iban") {
       const { getOrganisation } = await import("./organisation.server");
       const org = await getOrganisation();
-      bank = { begunstigde: org.naam, iban: org.iban, bic: org.bic };
+      if (org.iban) bank = { begunstigde: org.naam, iban: org.iban, bic: org.bic };
     }
     const receipt = orderEmail({
       naam: input.naam,

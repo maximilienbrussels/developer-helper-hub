@@ -75,7 +75,7 @@ const JSON_LD = {
       "@type": "LocalBusiness",
       "@id": "https://fermemaximilien.brussels/#organisation",
       name: "La Ferme du parc Maximilien",
-      telephone: "+3222015609",
+      telephone: "+3223315391",
       email: "info@fermeduparcmaximilien.be",
       address: {
         "@type": "PostalAddress",

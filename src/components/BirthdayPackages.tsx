@@ -29,6 +29,7 @@ import type { Lang } from "@/lib/i18n";
 import { sendContactMessage } from "@/lib/email.functions";
 import { useHoneypot } from "@/components/HoneypotField";
 import { InvitationEditor } from "@/components/InvitationEditor";
+import { BirthdayWaitlist } from "@/components/BirthdayWaitlist";
 import {
   BIRTHDAY_DEPOSIT,
   BIRTHDAY_HOUSE_RULES,
@@ -280,6 +281,8 @@ export function BirthdayPackages() {
           );
         })}
       </div>
+
+      <BirthdayWaitlist />
 
       <InvitationEditor />
 
