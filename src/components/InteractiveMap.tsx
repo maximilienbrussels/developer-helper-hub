@@ -127,6 +127,7 @@ export function InteractiveMap({ className = "" }: { className?: string }) {
           width={980}
           height={1377}
           loading="lazy"
+          decoding="async"
           className="block h-auto w-full select-none"
           draggable={false}
         />
@@ -137,9 +138,9 @@ export function InteractiveMap({ className = "" }: { className?: string }) {
           style={{ left: `${ENTRANCE.mapCoords.x}%`, top: `${ENTRANCE.mapCoords.y}%` }}
         >
           <div className="relative flex flex-col items-center">
-            <span className="absolute inset-0 -m-2 animate-ping rounded-full bg-emerald-400/50" aria-hidden />
+            <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400/50" aria-hidden />
             <span className="relative grid size-9 place-items-center rounded-full border-2 border-white bg-emerald-600 text-base shadow-lg">🚪</span>
-            <span className="mt-1 hidden whitespace-nowrap rounded-full bg-emerald-700 px-2 py-0.5 text-[10px] font-semibold text-white shadow sm:block">
+            <span className="sr-only">
               {lang === "fr" ? ENTRANCE.ctaFr : lang === "en" ? ENTRANCE.ctaEn : ENTRANCE.ctaNl}
             </span>
           </div>
