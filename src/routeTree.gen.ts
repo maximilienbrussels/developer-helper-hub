@@ -122,6 +122,7 @@ import { Route as ApiGoogleStatusRouteImport } from './routes/api/google/status'
 import { Route as ApiGoogleSyncRouteImport } from './routes/api/google/sync'
 import { Route as ApiInfomaniakStatusRouteImport } from './routes/api/infomaniak/status'
 import { Route as ApiInfomaniakSyncRouteImport } from './routes/api/infomaniak/sync'
+import { Route as ApiInternshipApplyRouteImport } from './routes/api/internship/apply'
 import { Route as ApiPaymentsCreateSessionRouteImport } from './routes/api/payments/create-session'
 import { Route as ApiPaymentsOrderSessionRouteImport } from './routes/api/payments/order-session'
 import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
@@ -737,6 +738,11 @@ const ApiInfomaniakSyncRoute = ApiInfomaniakSyncRouteImport.update({
   path: '/api/infomaniak/sync',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiInternshipApplyRoute = ApiInternshipApplyRouteImport.update({
+  id: '/api/internship/apply',
+  path: '/api/internship/apply',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPaymentsCreateSessionRoute =
   ApiPaymentsCreateSessionRouteImport.update({
     id: '/api/payments/create-session',
@@ -1069,6 +1075,7 @@ export interface FileRoutesByFullPath {
   '/api/google/sync': typeof ApiGoogleSyncRoute
   '/api/infomaniak/status': typeof ApiInfomaniakStatusRoute
   '/api/infomaniak/sync': typeof ApiInfomaniakSyncRoute
+  '/api/internship/apply': typeof ApiInternshipApplyRoute
   '/api/payments/create-session': typeof ApiPaymentsCreateSessionRoute
   '/api/payments/order-session': typeof ApiPaymentsOrderSessionRoute
   '/api/public/health': typeof ApiPublicHealthRoute
@@ -1222,6 +1229,7 @@ export interface FileRoutesByTo {
   '/api/google/sync': typeof ApiGoogleSyncRoute
   '/api/infomaniak/status': typeof ApiInfomaniakStatusRoute
   '/api/infomaniak/sync': typeof ApiInfomaniakSyncRoute
+  '/api/internship/apply': typeof ApiInternshipApplyRoute
   '/api/payments/create-session': typeof ApiPaymentsCreateSessionRoute
   '/api/payments/order-session': typeof ApiPaymentsOrderSessionRoute
   '/api/public/health': typeof ApiPublicHealthRoute
@@ -1380,6 +1388,7 @@ export interface FileRoutesById {
   '/api/google/sync': typeof ApiGoogleSyncRoute
   '/api/infomaniak/status': typeof ApiInfomaniakStatusRoute
   '/api/infomaniak/sync': typeof ApiInfomaniakSyncRoute
+  '/api/internship/apply': typeof ApiInternshipApplyRoute
   '/api/payments/create-session': typeof ApiPaymentsCreateSessionRoute
   '/api/payments/order-session': typeof ApiPaymentsOrderSessionRoute
   '/api/public/health': typeof ApiPublicHealthRoute
@@ -1538,6 +1547,7 @@ export interface FileRouteTypes {
     | '/api/google/sync'
     | '/api/infomaniak/status'
     | '/api/infomaniak/sync'
+    | '/api/internship/apply'
     | '/api/payments/create-session'
     | '/api/payments/order-session'
     | '/api/public/health'
@@ -1691,6 +1701,7 @@ export interface FileRouteTypes {
     | '/api/google/sync'
     | '/api/infomaniak/status'
     | '/api/infomaniak/sync'
+    | '/api/internship/apply'
     | '/api/payments/create-session'
     | '/api/payments/order-session'
     | '/api/public/health'
@@ -1848,6 +1859,7 @@ export interface FileRouteTypes {
     | '/api/google/sync'
     | '/api/infomaniak/status'
     | '/api/infomaniak/sync'
+    | '/api/internship/apply'
     | '/api/payments/create-session'
     | '/api/payments/order-session'
     | '/api/public/health'
@@ -1984,6 +1996,7 @@ export interface RootRouteChildren {
   ApiGoogleSyncRoute: typeof ApiGoogleSyncRoute
   ApiInfomaniakStatusRoute: typeof ApiInfomaniakStatusRoute
   ApiInfomaniakSyncRoute: typeof ApiInfomaniakSyncRoute
+  ApiInternshipApplyRoute: typeof ApiInternshipApplyRoute
   ApiPaymentsCreateSessionRoute: typeof ApiPaymentsCreateSessionRoute
   ApiPaymentsOrderSessionRoute: typeof ApiPaymentsOrderSessionRoute
   ApiPublicHealthRoute: typeof ApiPublicHealthRoute
@@ -2816,6 +2829,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiInfomaniakSyncRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/internship/apply': {
+      id: '/api/internship/apply'
+      path: '/api/internship/apply'
+      fullPath: '/api/internship/apply'
+      preLoaderRoute: typeof ApiInternshipApplyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/payments/create-session': {
       id: '/api/payments/create-session'
       path: '/api/payments/create-session'
@@ -3341,6 +3361,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiGoogleSyncRoute: ApiGoogleSyncRoute,
   ApiInfomaniakStatusRoute: ApiInfomaniakStatusRoute,
   ApiInfomaniakSyncRoute: ApiInfomaniakSyncRoute,
+  ApiInternshipApplyRoute: ApiInternshipApplyRoute,
   ApiPaymentsCreateSessionRoute: ApiPaymentsCreateSessionRoute,
   ApiPaymentsOrderSessionRoute: ApiPaymentsOrderSessionRoute,
   ApiPublicHealthRoute: ApiPublicHealthRoute,
