@@ -2,7 +2,7 @@
  * Bestanden overgenomen van de oude site (lafermeduparcmaximilien.be), nu zelf gehost.
  * Gegenereerd: elke import wijst naar een .asset.json-pointer.
  */
-import activiteitenverslag-2025 from "@/assets/oud/activiteitenverslag-2025.pdf.asset.json";
+import activiteitenverslag2025 from "@/assets/oud/activiteitenverslag-2025.pdf.asset.json";
 import peterAlpaca from "@/assets/oud/peter-alpaca.webp.asset.json";
 import peterBijenkorf from "@/assets/oud/peter-bijenkorf.webp.asset.json";
 import peterEzelPony from "@/assets/oud/peter-ezel-pony.webp.asset.json";
@@ -20,7 +20,7 @@ import stageGroenteteelt from "@/assets/oud/stage-groenteteelt.webp.asset.json";
 import stageImkerijDak from "@/assets/oud/stage-imkerij-dak.webp.asset.json";
 import stageOnderhoud from "@/assets/oud/stage-onderhoud.webp.asset.json";
 import stageProjectbeheer from "@/assets/oud/stage-projectbeheer.webp.asset.json";
-import transparantierapport-2025 from "@/assets/oud/transparantierapport-2025.pdf.asset.json";
+import transparantierapport2025 from "@/assets/oud/transparantierapport-2025.pdf.asset.json";
 import uitnodigingAchterkant from "@/assets/oud/uitnodiging-achterkant.webp.asset.json";
 import uitnodigingMaFeteChampetre from "@/assets/oud/uitnodiging-ma-fete-champetre.pdf.asset.json";
 import uitnodigingVoorkant from "@/assets/oud/uitnodiging-voorkant.webp.asset.json";
@@ -53,7 +53,7 @@ import fiche_shetlandponysEn from "@/assets/oud/fiches/shetlandponys-en.svg.asse
 import fiche_shetlandponysNl from "@/assets/oud/fiches/shetlandponys-nl.svg.asset.json";
 
 export const OLD_ASSETS = {
-  activiteitenverslag-2025: activiteitenverslag-2025.url,
+  activiteitenverslag2025: activiteitenverslag2025.url,
   peterAlpaca: peterAlpaca.url,
   peterBijenkorf: peterBijenkorf.url,
   peterEzelPony: peterEzelPony.url,
@@ -71,7 +71,7 @@ export const OLD_ASSETS = {
   stageImkerijDak: stageImkerijDak.url,
   stageOnderhoud: stageOnderhoud.url,
   stageProjectbeheer: stageProjectbeheer.url,
-  transparantierapport-2025: transparantierapport-2025.url,
+  transparantierapport2025: transparantierapport2025.url,
   uitnodigingAchterkant: uitnodigingAchterkant.url,
   uitnodigingMaFeteChampetre: uitnodigingMaFeteChampetre.url,
   uitnodigingVoorkant: uitnodigingVoorkant.url,
