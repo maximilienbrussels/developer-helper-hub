@@ -42,7 +42,7 @@ export async function ensureEventSignupSchema(): Promise<void> {
       status text not null check (status in ('confirmed','pending','waitlist','cancelled')),
       amount_cents integer not null default 0,
       stripe_session_id text,
-      cancel_token text not null unique default encode(gen_random_bytes(18), 'hex'),
+      cancel_token text not null unique default md5(random()::text || clock_timestamp()::text) || md5(random()::text || gen_random_uuid()::text),
       created_at timestamptz not null default now(),
       updated_at timestamptz not null default now()
     )
