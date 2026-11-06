@@ -40,7 +40,7 @@ export const Route = createFileRoute("/api/sponsorship/create-session")({
           "@/lib/sponsorship.server"
         );
         const tier = tierById(input.tierId);
-        if (!tier) return Response.json({ error: "unknown_tier" }, { status: 400 });
+        if (!tier || tier.legacy) return Response.json({ error: "unknown_tier" }, { status: 400 });
 
         const { pathFor, subPathFor } = await import("@/lib/routes-i18n");
         const origin = (() => {
