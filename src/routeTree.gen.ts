@@ -76,6 +76,7 @@ import { Route as BoekingIndexRouteImport } from './routes/boeking.index'
 import { Route as BoekingBevestigingRouteImport } from './routes/boeking.bevestiging'
 import { Route as CertificaatIdRouteImport } from './routes/certificaat.$id'
 import { Route as InformatieOnderwerpRouteImport } from './routes/informatie.$onderwerp'
+import { Route as InschrijvingAnnulerenRouteImport } from './routes/inschrijving.annuleren'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 import { Route as QrAnimalIdRouteImport } from './routes/qr.$animalId'
 import { Route as VeldIndexRouteImport } from './routes/veld.index'
@@ -502,6 +503,11 @@ const CertificaatIdRoute = CertificaatIdRouteImport.update({
 const InformatieOnderwerpRoute = InformatieOnderwerpRouteImport.update({
   id: '/informatie/$onderwerp',
   path: '/informatie/$onderwerp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InschrijvingAnnulerenRoute = InschrijvingAnnulerenRouteImport.update({
+  id: '/inschrijving/annuleren',
+  path: '/inschrijving/annuleren',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductSlugRoute = ProductSlugRouteImport.update({
@@ -1038,6 +1044,7 @@ export interface FileRoutesByFullPath {
   '/boeking/bevestiging': typeof BoekingBevestigingRoute
   '/certificaat/$id': typeof CertificaatIdRoute
   '/informatie/$onderwerp': typeof InformatieOnderwerpRoute
+  '/inschrijving/annuleren': typeof InschrijvingAnnulerenRoute
   '/product/$slug': typeof ProductSlugRoute
   '/qr/$animalId': typeof QrAnimalIdRoute
   '/veld/aanvragen': typeof VeldAanvragenRoute
@@ -1194,6 +1201,7 @@ export interface FileRoutesByTo {
   '/boeking/bevestiging': typeof BoekingBevestigingRoute
   '/certificaat/$id': typeof CertificaatIdRoute
   '/informatie/$onderwerp': typeof InformatieOnderwerpRoute
+  '/inschrijving/annuleren': typeof InschrijvingAnnulerenRoute
   '/product/$slug': typeof ProductSlugRoute
   '/qr/$animalId': typeof QrAnimalIdRoute
   '/veld/aanvragen': typeof VeldAanvragenRoute
@@ -1355,6 +1363,7 @@ export interface FileRoutesById {
   '/boeking/bevestiging': typeof BoekingBevestigingRoute
   '/certificaat/$id': typeof CertificaatIdRoute
   '/informatie/$onderwerp': typeof InformatieOnderwerpRoute
+  '/inschrijving/annuleren': typeof InschrijvingAnnulerenRoute
   '/product/$slug': typeof ProductSlugRoute
   '/qr/$animalId': typeof QrAnimalIdRoute
   '/veld/aanvragen': typeof VeldAanvragenRoute
@@ -1516,6 +1525,7 @@ export interface FileRouteTypes {
     | '/boeking/bevestiging'
     | '/certificaat/$id'
     | '/informatie/$onderwerp'
+    | '/inschrijving/annuleren'
     | '/product/$slug'
     | '/qr/$animalId'
     | '/veld/aanvragen'
@@ -1672,6 +1682,7 @@ export interface FileRouteTypes {
     | '/boeking/bevestiging'
     | '/certificaat/$id'
     | '/informatie/$onderwerp'
+    | '/inschrijving/annuleren'
     | '/product/$slug'
     | '/qr/$animalId'
     | '/veld/aanvragen'
@@ -1832,6 +1843,7 @@ export interface FileRouteTypes {
     | '/boeking/bevestiging'
     | '/certificaat/$id'
     | '/informatie/$onderwerp'
+    | '/inschrijving/annuleren'
     | '/product/$slug'
     | '/qr/$animalId'
     | '/veld/aanvragen'
@@ -1985,6 +1997,7 @@ export interface RootRouteChildren {
   BoekingBevestigingRoute: typeof BoekingBevestigingRoute
   CertificaatIdRoute: typeof CertificaatIdRoute
   InformatieOnderwerpRoute: typeof InformatieOnderwerpRoute
+  InschrijvingAnnulerenRoute: typeof InschrijvingAnnulerenRoute
   ProductSlugRoute: typeof ProductSlugRoute
   QrAnimalIdRoute: typeof QrAnimalIdRoute
   VerifieerCodeRoute: typeof VerifieerCodeRoute
@@ -2532,6 +2545,13 @@ declare module '@tanstack/react-router' {
       path: '/informatie/$onderwerp'
       fullPath: '/informatie/$onderwerp'
       preLoaderRoute: typeof InformatieOnderwerpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inschrijving/annuleren': {
+      id: '/inschrijving/annuleren'
+      path: '/inschrijving/annuleren'
+      fullPath: '/inschrijving/annuleren'
+      preLoaderRoute: typeof InschrijvingAnnulerenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/product/$slug': {
@@ -3366,6 +3386,7 @@ const rootRouteChildren: RootRouteChildren = {
   BoekingBevestigingRoute: BoekingBevestigingRoute,
   CertificaatIdRoute: CertificaatIdRoute,
   InformatieOnderwerpRoute: InformatieOnderwerpRoute,
+  InschrijvingAnnulerenRoute: InschrijvingAnnulerenRoute,
   ProductSlugRoute: ProductSlugRoute,
   QrAnimalIdRoute: QrAnimalIdRoute,
   VerifieerCodeRoute: VerifieerCodeRoute,
