@@ -95,7 +95,7 @@ export const Route = createFileRoute("/api/birthday/waitlist")({
             title: "Nieuwe aanvraag kinderfeestje",
             body: rows.map(([k, v]) => infoCard(k, v)).join("") + (d.note ? paragraphs(d.note) : ""),
             hideDisclaimer: true,
-          } as Parameters<typeof shell>[0]);
+          });
           const res = await send({
             replyTo: { email: d.email, name },
             to: to.map((email) => ({ email })),
