@@ -62,6 +62,15 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
   // Online gift: Stripe stuurt het betaalbewijs; geen boeking of factuur nodig.
   if (meta["kind"] === "donation") return;
 
+  // Betaalde evenement-inschrijving: plaats definitief bevestigen + mail.
+  if (meta["kind"] === "event" && meta["registration_id"]) {
+    const { confirmPaidRegistration } = await import("@/lib/event-signup.server");
+    await confirmPaidRegistration(meta["registration_id"], session.id).catch((err) =>
+      console.error("[stripe-webhook] inschrijving bevestigen mislukt", err),
+    );
+    return;
+  }
+
   // Gedrukte uitnodigingskaarten: drukopdracht naar de webshopinbox.
   if (meta["kind"] === "invitation") {
     await notifyInvitationOrder(session).catch((err) =>

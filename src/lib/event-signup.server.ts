@@ -287,7 +287,7 @@ export async function sendRegistrationMail(regId: string, kind: "confirmed" | "w
     kicker: title,
     title: m[kind],
     lang,
-    body: `<p>${escapeHtml(m.intro[kind])}</p>${infoGrid(cells.map((c) => ({ label: escapeHtml(c.label), value: escapeHtml(c.value) })))}
+    body: `<p>${escapeHtml(m.intro[kind])}</p>${infoGrid(cells)}
       <p style="margin-top:20px">${escapeHtml(m.cancelHint)}</p>${button(cancelUrl, m.cancel, "forest")}`,
   });
   await sendMail({ to: String(r.email), subject, html, transactional: true, kind: "event-registration" });
