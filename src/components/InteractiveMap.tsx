@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 
-import planFermeAsset from "@/assets/plan-ferme.png.asset.json";
+import planFermeAsset from "@/assets/plattegrond-ferme-maximilien.png.asset.json";
 import {
   ENTRANCE,
   FARM_MAP_DATA,
@@ -119,13 +119,13 @@ export function InteractiveMap({ className = "" }: { className?: string }) {
         </ul>
       </div>
 
-      <div className="relative overflow-hidden rounded-3xl border border-border bg-[color:var(--color-surface-forest)]/10 shadow-sm">
+      <div className="relative mx-auto max-w-2xl overflow-hidden rounded-3xl border border-border bg-[color:var(--color-surface-forest)]/10 shadow-sm">
         <img
           src={MAP_URL}
           onError={handleImageError}
           alt={c.title}
-          width={1600}
-          height={1100}
+          width={980}
+          height={1377}
           loading="lazy"
           className="block h-auto w-full select-none"
           draggable={false}
