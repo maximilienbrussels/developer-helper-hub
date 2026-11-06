@@ -156,7 +156,7 @@ export const FARM_MAP_DATA: FarmZone[] = [
     nameEn: "Sheep",
     category: "animal",
     icon: "🐑",
-    mapCoords: { x: 64.9, y: 49.6 },
+    mapCoords: { x: 44.1, y: 73.9 },
     species: "Houtlandschaap & Melkschapen",
     speciesMatch: /(schaap|schapen|lam|mouton|agneau|sheep|lamb)/i,
     descriptionNl: "Begrazen de grote zuidelijke weides richting de Boudewijnlaan.",

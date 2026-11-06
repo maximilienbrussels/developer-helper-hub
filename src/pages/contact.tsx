@@ -28,8 +28,8 @@ import {
   Check as CheckIcon,
 } from "lucide-react";
 
-const PHONE = "+3222015609";
-const PHONE_DISPLAY = "+32 2 201 56 09";
+const PHONE = "+3223315391";
+const PHONE_DISPLAY = "+32 2 331 53 91";
 const EMAIL = CONTACT_EMAIL;
 const ADDRESS_LINE1 = "Maximilien";
 const ADDRESS_LINE2 = "Schipperijkaai 2 / Quai du Batelage 2";

@@ -36,8 +36,8 @@ export const ORG_DEFAULTS = {
   legalName: "Maximilien VZW / ASBL",
   address: "Schipperijkaai 2",
   city: "1000 Brussel / Bruxelles",
-  phone: "+32 2 201 56 09",
-  phoneHref: "tel:+3222015609",
+  phone: "+32 2 331 53 91",
+  phoneHref: "tel:+3223315391",
   email: CONTACT_EMAIL,
   vat: "BE 0446.485.159",
 } as const;
