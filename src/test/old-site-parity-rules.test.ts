@@ -19,3 +19,23 @@ describe("internship application", () => {
     expect(CV_MAX_BYTES).toBe(5 * 1024 * 1024);
   });
 });
+
+import { isValidWaitlistDate, waitlistDateError } from "@/lib/birthday-waitlist";
+
+describe("birthday waiting list dates", () => {
+  // 2026-11-11 is a Wednesday, 2026-11-14 a Saturday, 2026-11-12 a Thursday.
+  it("accepts only Wednesday for the Wednesday party", () => {
+    expect(isValidWaitlistDate("2026-11-11", "woensdag", "2026-11-06")).toBe(true);
+    expect(isValidWaitlistDate("2026-11-14", "woensdag", "2026-11-06")).toBe(false);
+  });
+  it("accepts only Saturday for Saturday packages", () => {
+    expect(isValidWaitlistDate("2026-11-14", "zaterdag-halve-dag", "2026-11-06")).toBe(true);
+    expect(isValidWaitlistDate("2026-11-12", "familiefeest", "2026-11-06")).toBe(false);
+  });
+  it("rejects past dates and duplicate alternatives", () => {
+    expect(isValidWaitlistDate("2026-11-04", "woensdag", "2026-11-06")).toBe(false);
+    const base = { firstName: "a", lastName: "b", phone: "0470000000", email: "a@b.be", packageSlug: "woensdag", lang: "nl" as const };
+    expect(waitlistDateError({ ...base, date: "2026-11-11", alternatives: ["2026-11-11"] }, "2026-11-06")).toBe("alternatives");
+    expect(waitlistDateError({ ...base, date: "2026-11-11", alternatives: ["2026-11-18"] }, "2026-11-06")).toBeNull();
+  });
+});
