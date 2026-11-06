@@ -62,6 +62,14 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
   // Online gift: Stripe stuurt het betaalbewijs; geen boeking of factuur nodig.
   if (meta["kind"] === "donation") return;
 
+  // Gedrukte uitnodigingskaarten: drukopdracht naar de webshopinbox.
+  if (meta["kind"] === "invitation") {
+    await notifyInvitationOrder(session).catch((err) =>
+      console.error("[stripe-webhook] uitnodigingsbestelling melden mislukt", err),
+    );
+    return;
+  }
+
   // Webshopbestelling: status op `paid`, factuur genereren en mailen.
   if (meta["order_id"]) {
     const orderId = Number(meta["order_id"]);
