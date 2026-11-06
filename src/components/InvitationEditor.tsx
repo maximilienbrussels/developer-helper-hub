@@ -42,7 +42,7 @@ function CardFront({ f }: { f: InvitationFields }) {
       <div className="absolute" style={{ left: "61%", top: "27%", width: "30%" }}>
         <p style={{ fontSize: "5.2cqw", lineHeight: 1, letterSpacing: "0.08em" }}>{t.title}</p>
         <p style={{ fontSize: "3.1cqw", lineHeight: 1.1, letterSpacing: "0.12em" }}>{t.subtitle}</p>
-        <p style={{ fontSize: "1.75cqw", lineHeight: 1.45, marginTop: "1.6cqw", letterSpacing: "0.04em" }}>
+        <p style={{ fontSize: "2.05cqw", lineHeight: 1.4, marginTop: "1.6cqw", letterSpacing: "0.04em" }}>
           {t.hey} <span style={{ borderBottom: f.guest ? "none" : "0.12cqw dotted #1d1d1b", display: "inline-block", minWidth: "14cqw", fontWeight: 600 }}>{f.guest}</span>,{" "}
           {t.body(f.age)}
         </p>
@@ -62,7 +62,7 @@ function CardBack({ f }: { f: InvitationFields }) {
   return (
     <div className="relative w-full overflow-hidden bg-white" style={{ aspectRatio: "2067 / 974", containerType: "inline-size", fontFamily: HAND, color: "#1d1d1b" }}>
       <img src={OLD_ASSETS.uitnodigingAchterkant} alt="" crossOrigin="anonymous" className="absolute inset-0 h-full w-full" />
-      <div className="absolute" style={{ left: "7%", top: "31%", width: "55%", fontSize: "1.85cqw", lineHeight: 1.5 }}>
+      <div className="absolute" style={{ left: "7%", top: "31%", width: "58%", fontSize: "2.2cqw", lineHeight: 1.5 }}>
         <p><b>{t.when}</b> {date ? <span style={{ fontWeight: 600 }}>{date}</span> : <span style={line}>&nbsp;</span>}</p>
         <p>{t.time(f.from, f.to)}</p>
         <p style={{ marginTop: "1cqw" }}><b>{t.where}</b> {t.address}</p>
