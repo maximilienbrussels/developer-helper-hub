@@ -25,7 +25,6 @@ export const sendDonationConfirmation = createServerFn({ method: "POST" })
     const data = { ...input, email: own };
     await (await import("./email-guard.server")).guardRate("donation", data.email);
     const { sendMail, donationEmail } = await import("./email.server");
-    const { structuredCommunication } = await import("./payment-reference");
     // Giften per overschrijving lopen via Service Arc-en-Ciel (project n°156):
     // alleen met deze rekening en mededeling krijgt de gever een fiscaal attest.
     const { ARC_EN_CIEL } = await import("./donation");
