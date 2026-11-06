@@ -7,24 +7,13 @@
 >
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
-
-## What Lovable manages
-
-Rules outside this block are the project's own. Change the pieces below in
-Lovable, not by hand. With the [Lovable MCP](https://mcp.lovable.dev)
-connected, `send_message` asks Lovable to do it; otherwise ask the user to
-use the editor.
-
-- **Database.** Do not add or edit `supabase/migrations/` or `drizzle/`.
-  Ask Lovable to change the schema.
-- **Generated files.** Do not edit a file whose header says it is automatically
-  generated.
-- **AI gateway.** Keep model calls on Lovable's gateway, and keep
-  `LOVABLE_API_KEY` out of browser code.
-- **Connectors.** Lovable provides native connectors. `list_connectors` shows
-  which are enabled; `add_connector` only returns the dashboard link. When a
-  connector is enabled, calls go through the connector gateway and need
-  `LOVABLE_API_KEY`. When Lovable does not provide one, users can bring their
-  own key and store it in Secrets.
-- **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- Keep supplemental public languages on the English URL carrier; a locale may be released with `partial: true` once its interface keys and main public phrases are covered, so the menu labels it as partial while untranslated extras (e.g. Academy records) fall back to English.
+- Machine-translated phrase files (`<locale>-auto.ts`) are spread first in EXTRA_PHRASES so hand translations always override them.
+- Translate public copy objects through deepTx and individual English content through tx; interpolate translated templates afterward so dynamic values retain their meaning.
+- Use scripts/public-translations-audit.cjs for repeatable candidate inventories, not release approval; rendered pages, dynamic Academy records and downloadable documents require separate checks.
+- Group supplemental visitor phrase translations in locale-specific visitor dictionaries and merge them into EXTRA_PHRASES, so public tx/deepTx callers share the same exact-English lookup.
+- Keep pure OAuth URL validation in oauth-urls and internal return-path validation in redirect; share those rules across providers so callback cookies stay same-origin and malformed redirects cannot escape the site.
+- Use the central portal access result for login navigation, coalesce concurrent auth events, and surface failed checks without redirecting as denied; transient outages must not create login loops.
+- OAuth callbacks must pick their landing path through oauthLandingPath, and /auth auto-redirects go through the portal-login loop guard, because a path the current app mode cannot render bounces back to /auth in a loop.
