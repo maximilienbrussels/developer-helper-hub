@@ -63,7 +63,7 @@ export const Route = createFileRoute("/api/birthday/waitlist")({
         const pkg = BIRTHDAY_PACKAGES.find((p) => p.slug === d.packageSlug)!;
 
         const { brevoEnv, brevoRoute, brevoSender } = await import("@/lib/brevo");
-        const { shell, infoGrid, escapeHtml } = await import("@/lib/email-shell");
+        const { shell, infoCard, escapeHtml, paragraphs } = await import("@/lib/email-shell");
         const { recipientsFor } = await import("@/lib/contact-routes.server");
         const apiKey = brevoEnv("BREVO_API_KEY");
         if (!apiKey) return Response.json({ error: "mail_unavailable" }, { status: 503 });
@@ -79,20 +79,23 @@ export const Route = createFileRoute("/api/birthday/waitlist")({
 
         try {
           const to = await recipientsFor("familie");
-          const teamHtml = shell(
-            `<h2 style="font-family:Georgia,serif">Wachtlijst kinderfeestje — ${escapeHtml(name)}</h2>
-            ${infoGrid([
-              ["Formule", pkg.copy.nl.title],
-              ["Gewenste datum", fmt(d.date, "nl")],
-              ["Alternatieven", d.alternatives.length ? d.alternatives.map((a) => fmt(a, "nl")).join(" · ") : "—"],
-              ["Aantal kinderen", d.children ? String(d.children) : "—"],
-              ["Naam", name],
-              ["Telefoon", d.phone],
-              ["E-mail", d.email],
-              ["Taal", d.lang],
-            ])}
-            ${d.note ? `<p style="white-space:pre-wrap">${escapeHtml(d.note)}</p>` : ""}`,
-          );
+          const rows: [string, string][] = [
+            ["Formule", pkg.copy.nl.title],
+            ["Gewenste datum", fmt(d.date, "nl")],
+            ["Alternatieven", d.alternatives.length ? d.alternatives.map((a) => fmt(a, "nl")).join(" · ") : "—"],
+            ["Aantal kinderen", d.children ? String(d.children) : "—"],
+            ["Naam", name],
+            ["Telefoon", d.phone],
+            ["E-mail", d.email],
+            ["Taal", d.lang],
+          ];
+          const teamHtml = shell({
+            preview: `Wachtlijst: ${name} wil ${fmt(d.date, "nl")}`,
+            kicker: "Wachtlijst",
+            title: "Nieuwe aanvraag kinderfeestje",
+            body: rows.map(([k, v]) => infoCard(k, v)).join("") + (d.note ? paragraphs(d.note) : ""),
+            hideDisclaimer: true,
+          } as Parameters<typeof shell>[0]);
           const res = await send({
             replyTo: { email: d.email, name },
             to: to.map((email) => ({ email })),
@@ -105,15 +108,16 @@ export const Route = createFileRoute("/api/birthday/waitlist")({
           }
 
           const c = CONFIRM[d.lang];
-          const confirmHtml = shell(
-            `<p>${escapeHtml(c.hi(d.firstName))}</p><p>${escapeHtml(c.body)}</p>
-            ${infoGrid([
-              [c.dates, fmt(d.date, d.lang)],
-              ...(d.alternatives.length
-                ? ([[c.alt, d.alternatives.map((a) => fmt(a, d.lang)).join(" · ")]] as [string, string][])
-                : []),
-            ])}`,
-          );
+          const confirmHtml = shell({
+            preview: c.body,
+            title: c.subject,
+            lang: d.lang,
+            body:
+              `<p>${escapeHtml(c.hi(d.firstName))}</p>` +
+              paragraphs(c.body) +
+              infoCard(c.dates, fmt(d.date, d.lang)) +
+              (d.alternatives.length ? infoCard(c.alt, d.alternatives.map((a) => fmt(a, d.lang)).join(" · ")) : ""),
+          });
           // De bevestiging is een extraatje: mislukt ze, dan staat de aanvraag toch al bij het team.
           await send({ to: [{ email: d.email, name }], subject: c.subject, htmlContent: confirmHtml }).catch(
             (e) => console.error("[birthday-waitlist] bevestiging", e),
