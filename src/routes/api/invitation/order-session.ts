@@ -83,8 +83,8 @@ export const Route = createFileRoute("/api/invitation/order-session")({
             card_rsvp: `${c.rsvpName} ${c.rsvpPhone} ${c.rsvpBy}`.slice(0, 500),
             card_note: c.note.slice(0, 500),
           },
-          success_url: `${origin}/verjaardag?uitnodiging=besteld`,
-          cancel_url: `${origin}/verjaardag#uitnodiging`,
+          success_url: `${origin}/bezoekers/familie?uitnodiging=besteld#uitnodiging`,
+          cancel_url: `${origin}/bezoekers/familie#uitnodiging`,
         });
         return Response.json({ url: session.url });
       },
