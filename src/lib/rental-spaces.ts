@@ -75,6 +75,8 @@ export const PRIVATISATION_EXTRAS: Record<Lang, string[]> = {
 /** Wat de huurder zelf voorziet + praktische afspraken. */
 export const RENTAL_RULES: Record<Lang, string[]> = {
   nl: [
+    "Animatie en begeleiding van je deelnemers zijn niet inbegrepen bij ruimtehuur.",
+    "Op weekdagen kan het team discreet toegang nodig hebben tot de kantoren, keuken en toiletten; losse ruimtehuur is geen exclusieve huur van de hele boerderij.",
     "Zelf te voorzien: catering, geluidsinstallatie, extra meubilair en decoratie of opbouw.",
     "Opruimen en schoonmaken gebeurt binnen de gehuurde tijdstippen.",
     "De afgesproken uren en het aangekondigde aantal deelnemers worden strikt gerespecteerd.",
@@ -82,6 +84,8 @@ export const RENTAL_RULES: Record<Lang, string[]> = {
     "De lokalen worden proper en in hun oorspronkelijke staat achtergelaten; anders volgt een herstelfactuur.",
   ],
   fr: [
+    "La location des locaux ne comprend ni animation ni encadrement de vos participants.",
+    "En semaine, l'équipe peut accéder discrètement aux bureaux, à la cuisine et aux sanitaires ; louer un local ne privatise pas toute la ferme.",
     "À prévoir de votre côté : catering, sonorisation, mobilier supplémentaire, décoration et montage.",
     "Le rangement et le nettoyage se font dans les heures de location réservées.",
     "Les horaires convenus et le nombre de participants annoncé sont strictement respectés.",
@@ -89,6 +93,8 @@ export const RENTAL_RULES: Record<Lang, string[]> = {
     "Les lieux sont rendus propres et dans leur état initial ; à défaut, des frais de remise en état seront facturés.",
   ],
   en: [
+    "Space rental does not include activities or supervision of your participants.",
+    "On weekdays, staff may discreetly need access to offices, the kitchen and toilets; renting a room does not give exclusive use of the whole farm.",
     "To arrange yourself: catering, sound system, extra furniture, decoration and set-up.",
     "Tidying and cleaning happen within the booked rental hours.",
     "Agreed times and the announced number of participants are strictly respected.",

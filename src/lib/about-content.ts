@@ -15,6 +15,15 @@ export type Milestone = {
 
 export const MILESTONES: Milestone[] = [
   {
+    year: "< 1987",
+    title: { nl: "Van station naar boerderij", fr: "De la gare à la ferme", en: "From station to farm" },
+    body: {
+      nl: "Voordat de stadsboerderij hier kwam, was de plek achtereenvolgens een station en een helihaven.",
+      fr: "Avant d'accueillir la ferme urbaine, le site a été successivement une gare puis un héliport.",
+      en: "Before becoming the urban farm, the site was first a railway station and then a heliport.",
+    },
+  },
+  {
     year: "1987",
     title: {
       nl: "De boerderij wordt geboren",

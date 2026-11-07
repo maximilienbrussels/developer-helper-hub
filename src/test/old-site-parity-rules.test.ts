@@ -20,9 +20,23 @@ describe("internship application", () => {
   });
 });
 
-import { isValidWaitlistDate, waitlistDateError } from "@/lib/birthday-waitlist";
+import { isValidWaitlistDate, waitlistDateError, waitlistChildrenError } from "@/lib/birthday-waitlist";
 
 describe("birthday waiting list dates", () => {
+  it("rejects impossible dates even if JavaScript rolls them onto a Wednesday", () => {
+    expect(isValidWaitlistDate("2026-02-32", "woensdag", "2026-01-01")).toBe(false);
+    expect(isValidWaitlistDate("2026-13-06", "woensdag", "2026-01-01")).toBe(false);
+  });
+  it("limits Wednesday party requests to the published 18 children", () => {
+    const base = { firstName: "a", lastName: "b", phone: "0470000000", email: "a@b.be", packageSlug: "woensdag", lang: "nl" as const, date: "2026-11-11", alternatives: [] };
+    expect(waitlistChildrenError({ ...base, children: 18 })).toBe(false);
+    expect(waitlistChildrenError({ ...base, children: 19 })).toBe(true);
+  });
+  it("limits family party requests to the published 40 guests", () => {
+    const base = { firstName: "a", lastName: "b", phone: "0470000000", email: "a@b.be", packageSlug: "familiefeest", lang: "nl" as const, date: "2026-11-14", alternatives: [] };
+    expect(waitlistChildrenError({ ...base, children: 40 })).toBe(false);
+    expect(waitlistChildrenError({ ...base, children: 41 })).toBe(true);
+  });
   // 2026-11-11 is a Wednesday, 2026-11-14 a Saturday, 2026-11-12 a Thursday.
   it("accepts only Wednesday for the Wednesday party", () => {
     expect(isValidWaitlistDate("2026-11-11", "woensdag", "2026-11-06")).toBe(true);
