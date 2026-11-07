@@ -11,8 +11,12 @@ const ISO = /^\d{4}-\d{2}-\d{2}$/;
 
 /** Weekdag van een ISO-datum, los van de tijdzone van de server. */
 export function isoWeekday(iso: string): number {
+  if (!ISO.test(iso)) return NaN;
   const [y, m, d] = iso.split("-").map(Number);
-  return new Date(Date.UTC(y!, m! - 1, d!)).getUTCDay();
+  if (y === undefined || m === undefined || d === undefined) return NaN;
+  const date = new Date(Date.UTC(y, m - 1, d));
+  if (date.getUTCFullYear() !== y || date.getUTCMonth() !== m - 1 || date.getUTCDate() !== d) return NaN;
+  return date.getUTCDay();
 }
 
 /** Mag deze datum voor dit pakket (juiste weekdag, niet in het verleden)? */
@@ -49,4 +53,15 @@ export function waitlistDateError(input: WaitlistInput, todayIso: string): strin
     seen.add(a);
   }
   return null;
+}
+
+/** Shares the party's published capacity with the waiting-list form. */
+export function waitlistChildrenLimit(packageSlug: string): number | undefined {
+  const pkg = BIRTHDAY_PACKAGES.find((p) => p.slug === packageSlug);
+  return pkg?.maxChildren ?? pkg?.maxGuests ?? undefined;
+}
+
+export function waitlistChildrenError(input: WaitlistInput): boolean {
+  const limit = waitlistChildrenLimit(input.packageSlug);
+  return input.children !== undefined && (limit === undefined || input.children > limit);
 }

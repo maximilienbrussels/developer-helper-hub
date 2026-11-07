@@ -41,14 +41,14 @@ export const TEAMBUILDING_FORMULAS: TeamBuildingFormula[] = [
     copy: {
       nl: {
         title: "Teambuilding op de stadsboerderij",
-        place: "Schipperijkaai 2, 1000 Brussel — 5 min. van Brussel-Centraal",
+        place: "Schipperijkaai 2, 1000 Brussel",
         lede: "Een dag met de handen in de aarde, midden in de stad. Je team werkt samen aan echte boerderijtaken en sluit af rond de tafel.",
         activities: [
-          "Moestuinatelier: zaaien, planten en oogsten voor de solidaire verdeling",
-          "Dierenverzorging onder begeleiding van onze animatoren",
-          "Bouwatelier: insectenhotels, bakken of composteerruimte",
-          "Kookmoment met de oogst van de dag",
-          "Boerderijquiz en rondleiding over biodiversiteit in de stad",
+          "Oktober–maart: boomgaard en werken met fruit",
+          "April–juni: tuinieren, compost en het leven in de bodem",
+          "Juli–september: bijen houden en honing slingeren",
+          "Neem je zelfgemaakte kruideninfusie mee naar huis, of honing tijdens het bijenseizoen",
+          "Het hele jaar: rondleiding en sportieve buitenuitdagingen op maat van je team",
         ],
         includes: [
           "Twee animatoren voor de hele duur",
@@ -60,14 +60,14 @@ export const TEAMBUILDING_FORMULAS: TeamBuildingFormula[] = [
       },
       fr: {
         title: "Team building à la ferme urbaine",
-        place: "Quai du Batelage 2, 1000 Bruxelles — à 5 min de Bruxelles-Central",
+        place: "Quai du Batelage 2, 1000 Bruxelles",
         lede: "Une journée les mains dans la terre, en pleine ville. Votre équipe collabore sur de vraies tâches de ferme et termine autour de la table.",
         activities: [
-          "Atelier potager : semer, planter et récolter pour la distribution solidaire",
-          "Soin des animaux encadré par nos animateurs",
-          "Atelier construction : hôtels à insectes, bacs ou espace compost",
-          "Moment cuisine avec la récolte du jour",
-          "Quiz de la ferme et visite guidée sur la biodiversité urbaine",
+          "Octobre–mars : verger et travail autour des fruits",
+          "Avril–juin : jardinage, compost et vie du sol",
+          "Juillet–septembre : apiculture et extraction du miel",
+          "Repartez avec votre infusion préparée sur place, ou du miel pendant la période apicole",
+          "Toute l’année : visite guidée et défis sportifs en plein air adaptés à votre équipe",
         ],
         includes: [
           "Deux animateurs pendant toute la durée",
@@ -79,14 +79,14 @@ export const TEAMBUILDING_FORMULAS: TeamBuildingFormula[] = [
       },
       en: {
         title: "Team building at the urban farm",
-        place: "Quai du Batelage 2, 1000 Brussels — 5 min from Brussels-Central",
+        place: "Quai du Batelage 2, 1000 Brussels",
         lede: "A day with your hands in the soil, right in the city. Your team works together on real farm tasks and finishes around the table.",
         activities: [
-          "Kitchen-garden workshop: sowing, planting and harvesting for the solidarity distribution",
-          "Animal care guided by our facilitators",
-          "Building workshop: insect hotels, planters or the compost area",
-          "Cooking session with the day's harvest",
-          "Farm quiz and guided tour on urban biodiversity",
+          "October–March: orchard activities and working with fruit",
+          "April–June: gardening, compost and soil life",
+          "July–September: beekeeping and honey extraction",
+          "Take home your own herbal infusion, or honey during the beekeeping season",
+          "All year: guided tours and outdoor sporting challenges tailored to your team",
         ],
         includes: [
           "Two facilitators for the whole session",
@@ -109,11 +109,11 @@ export const TEAMBUILDING_FORMULAS: TeamBuildingFormula[] = [
         place: "Sterrebeek, op 20 min. van Brussel",
         lede: "Meer ruimte, meer groen en plaats voor grote groepen. Weiden, boomgaard en een grote schuur voor het gezamenlijke slot.",
         activities: [
-          "Landbouwparcours in de weiden en de boomgaard",
-          "Hooi- en oogstateliers per subteam",
-          "Vuurkorf, brood bakken en kookwedstrijd",
-          "Oriëntatietocht met opdrachten rond natuur en samenwerking",
-          "Sportieve boerenspelen voor grote groepen",
+          "Oktober–maart: fruitbomen planten in Sterrebeek",
+          "April–juni: tuinieren, compost en het leven in de bodem",
+          "Juli–september: bijen houden en honing slingeren",
+          "Neem je zelfgemaakte kruideninfusie mee naar huis, of honing tijdens het bijenseizoen",
+          "Het hele jaar: rondleiding en sportieve buitenuitdagingen op maat van je team",
         ],
         includes: [
           "Animatoren volgens groepsgrootte (1 per 20 personen)",
@@ -128,11 +128,11 @@ export const TEAMBUILDING_FORMULAS: TeamBuildingFormula[] = [
         place: "Sterrebeek, à 20 min de Bruxelles",
         lede: "Plus d'espace, plus de vert et de la place pour les grands groupes. Prairies, verger et une grande grange pour la clôture commune.",
         activities: [
-          "Parcours agricole dans les prairies et le verger",
-          "Ateliers foin et récolte par sous-équipes",
-          "Feu de camp, pain cuit sur place et concours de cuisine",
-          "Course d'orientation avec défis nature et coopération",
-          "Jeux de ferme sportifs pour grands groupes",
+          "Octobre–mars : plantation d’arbres fruitiers à Sterrebeek",
+          "Avril–juin : jardinage, compost et vie du sol",
+          "Juillet–septembre : apiculture et extraction du miel",
+          "Repartez avec votre infusion préparée sur place, ou du miel pendant la période apicole",
+          "Toute l’année : visite guidée et défis sportifs en plein air adaptés à votre équipe",
         ],
         includes: [
           "Animateurs selon la taille du groupe (1 pour 20 personnes)",
@@ -147,11 +147,11 @@ export const TEAMBUILDING_FORMULAS: TeamBuildingFormula[] = [
         place: "Sterrebeek, 20 min from Brussels",
         lede: "More space, more green and room for large groups. Meadows, an orchard and a large barn for the closing session.",
         activities: [
-          "Farming trail through the meadows and orchard",
-          "Hay and harvest workshops in sub-teams",
-          "Campfire, freshly baked bread and a cooking contest",
-          "Orienteering course with nature and cooperation challenges",
-          "Sporty farm games for large groups",
+          "October–March: planting fruit trees in Sterrebeek",
+          "April–June: gardening, compost and soil life",
+          "July–September: beekeeping and honey extraction",
+          "Take home your own herbal infusion, or honey during the beekeeping season",
+          "All year: guided tours and outdoor sporting challenges tailored to your team",
         ],
         includes: [
           "Facilitators based on group size (1 per 20 people)",

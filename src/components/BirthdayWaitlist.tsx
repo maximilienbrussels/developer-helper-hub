@@ -1,10 +1,12 @@
 import { useMemo, useState } from "react";
 import { CalendarClock, Check, Loader2, X } from "lucide-react";
+import { nl, fr, enGB } from "react-day-picker/locale";
+import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { BIRTHDAY_PACKAGES } from "@/lib/birthday-packages";
-import { WAITLIST_MAX_ALTERNATIVES } from "@/lib/birthday-waitlist";
+import { WAITLIST_MAX_ALTERNATIVES, waitlistChildrenLimit } from "@/lib/birthday-waitlist";
 import { useT } from "@/lib/i18n";
 
 const COPY = {
@@ -27,7 +29,10 @@ const COPY = {
     sending: "Bezig…",
     done: "Je staat op de wachtlijst. Je krijgt zo een bevestiging per e-mail.",
     again: "Nog een aanvraag",
+    received: "Je aanvraag is bij het team aangekomen. De bevestigingsmail kon niet worden verstuurd. Je hoeft niet opnieuw aan te vragen.",
+    remove: "Verwijder datum",
     errors: {
+      children: "Het aantal kinderen overschrijdt de capaciteit van deze formule.",
       date: "Kies een geldige datum voor deze formule.",
       alternatives: "Een van de alternatieve data klopt niet.",
       rate_limited: "Te veel aanvragen. Probeer het over een uur opnieuw.",
@@ -54,7 +59,10 @@ const COPY = {
     sending: "Envoi…",
     done: "Vous êtes sur la liste d'attente. Une confirmation arrive par e-mail.",
     again: "Nouvelle demande",
+    received: "Votre demande est parvenue à l’équipe. La confirmation n’a pas pu être envoyée. Il est inutile de refaire la demande.",
+    remove: "Supprimer la date",
     errors: {
+      children: "Le nombre d’enfants dépasse la capacité de cette formule.",
       date: "Choisissez une date valable pour cette formule.",
       alternatives: "Une des dates alternatives n'est pas valable.",
       rate_limited: "Trop de demandes. Réessayez dans une heure.",
@@ -81,7 +89,10 @@ const COPY = {
     sending: "Sending…",
     done: "You're on the waiting list. A confirmation is on its way by e-mail.",
     again: "Another request",
+    received: "The team has received your request. The confirmation email could not be sent. You do not need to submit again.",
+    remove: "Remove date",
     errors: {
+      children: "The number of children exceeds this package’s capacity.",
       date: "Choose a valid date for this package.",
       alternatives: "One of the alternative dates isn't valid.",
       rate_limited: "Too many requests. Try again in an hour.",
@@ -98,12 +109,13 @@ export function BirthdayWaitlist() {
   const { lang } = useT();
   const c = COPY[lang];
   const locale = lang === "nl" ? "nl-BE" : lang === "fr" ? "fr-BE" : "en-GB";
-  const [pkgSlug, setPkgSlug] = useState(BIRTHDAY_PACKAGES[0]!.slug);
-  const pkg = BIRTHDAY_PACKAGES.find((p) => p.slug === pkgSlug)!;
+  const [pkgSlug, setPkgSlug] = useState(BIRTHDAY_PACKAGES[0]?.slug ?? "woensdag");
+  const pkg = BIRTHDAY_PACKAGES.find((p) => p.slug === pkgSlug);
   const [date, setDate] = useState<Date | undefined>();
   const [alts, setAlts] = useState<Date[]>([]);
   const [form, setForm] = useState({ firstName: "", lastName: "", phone: "", email: "", children: "", note: "", hp: "" });
   const [state, setState] = useState<"idle" | "sending" | "done">("idle");
+  const [confirmationSent, setConfirmationSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const today = useMemo(() => {
@@ -111,13 +123,15 @@ export function BirthdayWaitlist() {
     t.setHours(0, 0, 0, 0);
     return t;
   }, []);
-  const disabled = [{ before: today }, (d: Date) => d.getDay() !== pkg.weekday];
+  const disabled = [{ before: today }, (d: Date) => d.getDay() !== pkg?.weekday];
   const fmt = (d: Date) => d.toLocaleDateString(locale, { weekday: "short", day: "numeric", month: "short" });
 
   const pickPackage = (slug: string) => {
     setPkgSlug(slug);
     setDate(undefined);
     setAlts([]);
+    setForm((f) => ({ ...f, children: "" }));
+    setError(null);
   };
 
   const toggleAlt = (list: Date[] | undefined) => {
@@ -148,7 +162,11 @@ export function BirthdayWaitlist() {
           lang,
         }),
       });
-      if (res.ok) return setState("done");
+      if (res.ok) {
+        const result = await res.json() as { confirmationSent?: boolean };
+        setConfirmationSent(result.confirmationSent === true);
+        return setState("done");
+      }
       const { error: code } = (await res.json().catch(() => ({}))) as { error?: string };
       setError(c.errors[(code as keyof typeof c.errors) ?? "generic"] ?? c.errors.generic);
     } catch {
@@ -164,7 +182,7 @@ export function BirthdayWaitlist() {
   });
 
   return (
-    <section id="wachtlijst" className="mt-6 scroll-mt-24 rounded-3xl border border-border bg-card p-6 md:p-8">
+    <section id="wachtlijst" className="mt-10 scroll-mt-24 border-t border-border py-8">
       <p className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.25em] text-[color:var(--color-terracotta)]">
         <CalendarClock className="h-4 w-4" aria-hidden /> {c.eyebrow}
       </p>
@@ -175,19 +193,19 @@ export function BirthdayWaitlist() {
       {state === "done" ? (
         <div className="mt-6 flex flex-col items-start gap-3 rounded-2xl bg-[color:var(--surface-page)]/70 p-5">
           <p className="flex items-center gap-2 text-sm font-medium text-[color:var(--ink-forest)]">
-            <Check className="h-4 w-4 text-[color:var(--color-terracotta)]" aria-hidden /> {c.done}
+            <Check className="h-4 w-4 text-[color:var(--color-terracotta)]" aria-hidden /> {confirmationSent ? c.done : c.received}
           </p>
-          <button
+          <Button
             type="button"
             onClick={() => {
               setState("idle");
               setDate(undefined);
               setAlts([]);
             }}
-            className="text-sm font-semibold text-[color:var(--color-terracotta)] underline-offset-4 hover:underline"
+            variant="link" className="px-0"
           >
             {c.again}
-          </button>
+          </Button>
         </div>
       ) : (
         <form onSubmit={submit} className="mt-6 grid gap-6 lg:grid-cols-2">
@@ -196,20 +214,21 @@ export function BirthdayWaitlist() {
               <legend className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">{c.pkg}</legend>
               <div className="mt-2 grid gap-2 sm:grid-cols-3">
                 {BIRTHDAY_PACKAGES.map((p) => (
-                  <button
+                  <Button
                     key={p.slug}
                     type="button"
+                    variant={p.slug === pkgSlug ? "default" : "outline"}
                     aria-pressed={p.slug === pkgSlug}
                     onClick={() => pickPackage(p.slug)}
                     className={`rounded-xl border px-3 py-2.5 text-left text-xs font-medium transition-colors ${
                       p.slug === pkgSlug
-                        ? "border-transparent bg-[color:var(--color-terracotta)] text-white"
+                        ? "border-transparent"
                         : "border-border bg-background text-foreground/90 hover:border-[color:var(--color-terracotta)]"
                     }`}
                   >
                     <span className="block font-semibold">{p.copy[lang].title}</span>
                     <span className="opacity-80">{p.copy[lang].day}</span>
-                  </button>
+                  </Button>
                 ))}
               </div>
             </fieldset>
@@ -218,6 +237,8 @@ export function BirthdayWaitlist() {
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">{c.date}</p>
                 <Calendar
+                  locale={lang === "nl" ? nl : lang === "fr" ? fr : enGB}
+                  weekStartsOn={1}
                   mode="single"
                   selected={date}
                   onSelect={(d) => {
@@ -233,7 +254,10 @@ export function BirthdayWaitlist() {
                   {c.alts(WAITLIST_MAX_ALTERNATIVES)}
                 </p>
                 <Calendar
+                  locale={lang === "nl" ? nl : lang === "fr" ? fr : enGB}
+                  weekStartsOn={1}
                   mode="multiple"
+                  max={WAITLIST_MAX_ALTERNATIVES}
                   selected={alts}
                   onSelect={toggleAlt}
                   disabled={[...disabled, ...(date ? [date] : [])]}
@@ -243,21 +267,22 @@ export function BirthdayWaitlist() {
             </div>
             <div className="flex flex-wrap gap-2" aria-live="polite">
               {date ? (
-                <span className="rounded-full bg-[color:var(--color-terracotta)] px-3 py-1 text-xs font-semibold text-white">
+                <span className="rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
                   {fmt(date)}
                 </span>
               ) : null}
               {alts.map((a) => (
                 <span key={toIso(a)} className="inline-flex items-center gap-1 rounded-full border border-border px-3 py-1 text-xs">
                   {fmt(a)}
-                  <button
+                  <Button
                     type="button"
-                    aria-label="×"
+                    variant="ghost" size="icon"
+                    aria-label={`${c.remove}: ${fmt(a)}`}
                     onClick={() => setAlts((l) => l.filter((x) => toIso(x) !== toIso(a)))}
-                    className="text-muted-foreground hover:text-foreground"
+                    className="size-6 min-h-0 text-muted-foreground"
                   >
                     <X className="h-3 w-3" />
-                  </button>
+                  </Button>
                 </span>
               ))}
               {!alts.length ? <span className="text-xs text-muted-foreground">{c.altsHint}</span> : null}
@@ -285,7 +310,7 @@ export function BirthdayWaitlist() {
             </div>
             <label className="block text-sm">
               {c.children}
-              <Input type="number" min={1} max={40} inputMode="numeric" className="mt-1 max-w-[10rem]" {...field("children")} />
+              <Input type="number" min={1} max={waitlistChildrenLimit(pkgSlug)} inputMode="numeric" className="mt-1 max-w-[10rem]" {...field("children")} />
             </label>
             <label className="block text-sm">
               {c.message}
@@ -300,14 +325,14 @@ export function BirthdayWaitlist() {
               {...field("hp")}
             />
             {error ? <p role="alert" className="text-sm text-destructive">{error}</p> : null}
-            <button
+            <Button
               type="submit"
               disabled={state === "sending"}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[color:var(--color-terracotta)] px-5 py-3 text-[12px] font-semibold uppercase tracking-widest text-white transition-colors hover:bg-[color:var(--surface-forest)] disabled:opacity-60"
+              className="w-full min-h-12 px-5 py-3 text-sm font-semibold"
             >
               {state === "sending" ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : null}
               {state === "sending" ? c.sending : c.submit}
-            </button>
+            </Button>
           </div>
         </form>
       )}

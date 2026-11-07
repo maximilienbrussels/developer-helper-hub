@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BIRTHDAY_PACKAGES } from "@/lib/birthday-packages";
-import { waitlistDateError, waitlistSchema } from "@/lib/birthday-waitlist";
+import { waitlistChildrenError, waitlistDateError, waitlistSchema } from "@/lib/birthday-waitlist";
 
 /**
  * Wachtlijst kinderfeestje: mail naar de familie-inbox (antwoorden gaat
@@ -31,8 +31,7 @@ const CONFIRM = {
 } as const;
 
 function fmt(iso: string, lang: "nl" | "fr" | "en") {
-  const [y, m, d] = iso.split("-").map(Number);
-  return new Date(Date.UTC(y!, m! - 1, d!)).toLocaleDateString(
+  return new Date(`${iso}T12:00:00Z`).toLocaleDateString(
     lang === "nl" ? "nl-BE" : lang === "fr" ? "fr-BE" : "en-GB",
     { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" },
   );
@@ -60,7 +59,9 @@ export const Route = createFileRoute("/api/birthday/waitlist")({
         const today = new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Brussels" });
         const dateErr = waitlistDateError(d, today);
         if (dateErr) return Response.json({ error: dateErr }, { status: 400 });
-        const pkg = BIRTHDAY_PACKAGES.find((p) => p.slug === d.packageSlug)!;
+        const pkg = BIRTHDAY_PACKAGES.find((p) => p.slug === d.packageSlug);
+        if (!pkg) return Response.json({ error: "date" }, { status: 400 });
+        if (waitlistChildrenError(d)) return Response.json({ error: "children" }, { status: 400 });
 
         const { brevoEnv, brevoRoute, brevoSender } = await import("@/lib/brevo");
         const { shell, infoCard, escapeHtml, paragraphs } = await import("@/lib/email-shell");
@@ -119,10 +120,15 @@ export const Route = createFileRoute("/api/birthday/waitlist")({
               (d.alternatives.length ? infoCard(c.alt, d.alternatives.map((a) => fmt(a, d.lang)).join(" · ")) : ""),
           });
           // De bevestiging is een extraatje: mislukt ze, dan staat de aanvraag toch al bij het team.
-          await send({ to: [{ email: d.email, name }], subject: c.subject, htmlContent: confirmHtml }).catch(
-            (e) => console.error("[birthday-waitlist] bevestiging", e),
-          );
-          return Response.json({ ok: true });
+          let confirmationSent = false;
+          try {
+            const confirmation = await send({ to: [{ email: d.email, name }], subject: c.subject, htmlContent: confirmHtml });
+            confirmationSent = confirmation.ok;
+            if (!confirmation.ok) console.error("[birthday-waitlist] confirmation refused", confirmation.status);
+          } catch (e) {
+            console.error("[birthday-waitlist] confirmation failed", e);
+          }
+          return Response.json({ ok: true, confirmationSent });
         } catch (err) {
           console.error("[birthday-waitlist] versturen mislukt", err);
           return Response.json({ error: "mail_failed" }, { status: 502 });
